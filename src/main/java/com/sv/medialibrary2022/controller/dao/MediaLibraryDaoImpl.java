@@ -22,6 +22,9 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     private Map<String, Media> media = new HashMap<>();
     private Map<String, Library> libraries = new HashMap<>();
     
+    private int mediaIndex = 100;
+    private int libraryIndex = 10;
+    
     // Creates default library at runtime
     public MediaLibraryDaoImpl() {
         setDefaultLibrary();
@@ -42,12 +45,13 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
     
     private void setStubMedia() {
-        Media m1 = new Media("100");
+        
+        Media m1 = new Media(String.valueOf(mediaIndex++));
         m1.setTitle("2001: A Space Odyssey");
         m1.setCreator("Arthur C Clark");
         m1.setFormat("Paperback");
         
-        Media mm1 = new Media("101");
+        Media mm1 = new Media(String.valueOf(mediaIndex++));
         mm1.setTitle("2001: A Space Odyssey");
         mm1.setCreator("Arthur C Clark / Stanley Kubrick");
         mm1.setFormat("DVD");
@@ -55,17 +59,17 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         mm1.setLibrary("01");
         
         
-        Media m2 = new Media("102");
+        Media m2 = new Media(String.valueOf(mediaIndex++));
         m2.setTitle("2010: Odyssey Two");
         m2.setCreator("Arthur C Clark");
         m2.setFormat("Paperback");
 
-        Media m3 = new Media("103");
+        Media m3 = new Media(String.valueOf(mediaIndex++));
         m3.setTitle("2061: Odyssey Three");
         m3.setCreator("Arthur C Clark");
         m3.setFormat("Hard Cover");
         
-        Media m4 = new Media("104");
+        Media m4 = new Media(String.valueOf(mediaIndex++));
         m4.setTitle("3001: The Final Odyssey");
         m4.setCreator("Arthur C Clark");
         m4.setFormat("Hard Cover");
@@ -89,14 +93,16 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
 
     @Override
-    public Media addMedia(String mediaID, Media mediaItem) {
-        Media prevMedia = media.put(mediaID, mediaItem);
+    public Media addMedia(Media mediaItem) {
+        mediaItem.setMediaID(String.valueOf(mediaIndex++));
+        Media prevMedia = media.put(mediaItem.getMediaID(), mediaItem);
         return prevMedia;
     }
 
     @Override
-    public Library addLibrary(String libraryID, Library libraryItem) {
-        Library prevLibrary = libraries.put(libraryID, libraryItem);
+    public Library addLibrary(Library libraryItem) {
+        libraryItem.setLibraryID(String.valueOf(libraryIndex++));
+        Library prevLibrary = libraries.put(libraryItem.getLibraryID(), libraryItem);
         return prevLibrary;
     }
 

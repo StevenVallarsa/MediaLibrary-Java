@@ -20,9 +20,25 @@ public class Library {
     public Library(String libraryID) {
         this.libraryID = libraryID;
     }
+    
+    public Library() {
+        
+    }
 
     public String getLibraryID() {
         return libraryID;
+    }
+    
+    public void setLibraryID(String libraryID) {
+        this.libraryID = libraryID;
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLocation() {

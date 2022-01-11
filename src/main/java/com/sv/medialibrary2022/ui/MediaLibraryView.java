@@ -26,29 +26,31 @@ public class MediaLibraryView {
             io.print("=========");
             io.print("1. List Media by Libraries");
             io.print("2. Create Media");
-            io.print("3. Create Library");
-            io.print("4. View Specific Media");
-            io.print("5. View Specific Library");
-            io.print("6. Remove Media");    
-            io.print("7. Remove Library");
-            io.print("8. Move Media Item");
+            io.print("3. View a Media Item");
+            io.print("4. Move Media Item");
+            io.print("5. Remove Media");    
+            io.print("6. Create Library");
+            io.print("7. List Libraries");
+            io.print("8. Remove Library");
             io.print("9. EXIT");
             
-            return io.readInt("\nWhat is your pleasure?", 1, 9);
+            return io.readInt("\nWhat would like to do?", 1, 9);
         }
         
         public Media getNewMediaInfo() {
-            String mediaID = io.readString("ID #");
-            String title = io.readString("Title");
+            io.print("\n-+-+-+-+-+-+-+-+-+-+-+-");
+            io.print("CREATE A NEW MEDIA ITEM");
+            io.print("-+-+-+-+-+-+-+-+-+-+-+-");
+            
+            Media item = new Media();
+            
+            item.setTitle(io.readString("Title"));
             String creator = io.readString("Creator");
             String description = io.readString("Description");
             String year = io.readString("Year");
             String genre = io.readString("Genre");
             String format = io.readString("Media format");
             String libraryID = "00"; // All media default to return cart on creation
-            
-            Media item = new Media(mediaID);
-            item.setTitle(title);
             item.setCreator(creator);
             item.setDescription(description);
             item.setYear(year);
@@ -56,7 +58,26 @@ public class MediaLibraryView {
             item.setFormat(format);
             item.setLibrary(libraryID);
             
+            
+            
             return item;
+        }
+        
+        public Library getNewLibraryInfo() {
+            io.print("\n-+-+-+-+-+-+-+-+-+-+");
+            io.print("CREATE A NEW LIBRARY");
+            io.print("-+-+-+-+-+-+-+-+-+-+");
+            
+            Library newLibrary = new Library();
+            newLibrary.setName(io.readString("New library name"));
+            newLibrary.setLocation(io.readString("Location"));
+            return newLibrary;
+        }
+            
+        
+        
+        public void displaySuccessBanner(String action, String format, String title) {
+            io.print("You successfully " + action + " a " + format + " with the title of \" + title + \".");
         }
         
         public void displayLibrariesAndMedia(List<Library> libraries, List<Media> media) {

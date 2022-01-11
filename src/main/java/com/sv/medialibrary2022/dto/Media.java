@@ -25,9 +25,17 @@ public class Media {
         this.mediaID = mediaID;
         this.library = "00"; // all new media put in default library upon creation
     }
+    
+    public Media() {
+        this.library = "00";
+    }
 
     public String getMediaID() {
         return mediaID;
+    }
+    
+    public void setMediaID(String mediaID) {
+        this.mediaID = mediaID;
     }
 
     public String getTitle() {

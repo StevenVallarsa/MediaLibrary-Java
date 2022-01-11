@@ -30,22 +30,20 @@ public interface MediaLibraryDao {
      * If there is already a media item associated with the given ID it will
      * return that object, else it will return null.
      * 
-     * @param mediaID unique identifier for the media item
      * @param mediaItem to be added to the collection
      * @return the media object if duplicate, or null if unique
      */
-    Media addMedia(String mediaID, Media mediaItem);
+    Media addMedia(Media mediaItem);
     
     /**
      * Add the given media to the collection and associate it with its ID.
      * If there is already a media item associated with the given ID it will
      * return that object, else it will return null.
      * 
-     * @param libraryID unique identifier for the library
      * @param libraryItem to be added to the list of libraries
      * @return the library object if duplicate, or null if unique
      */
-    Library addLibrary(String libraryID, Library libraryItem);
+    Library addLibrary(Library libraryItem);
     
     /**
      * Returns a Media object with the given ID

@@ -32,30 +32,35 @@ public class MediaLibraryController {
             
             switch(menuSelection) {
                 case 1:
+                    // LIST MEDIA BY LIBRARIES
                     List<Library> libraries = getLibraryList();
                     List<Media> media = getMediaList();
                     view.displayLibrariesAndMedia(libraries, media);
                     break;
                 case 2:
-                    view.print("Create Media");
+                    // CREATE NEW MEDIA ITEM
+                    Media newMedia = view.getNewMediaInfo();
+                    dao.addMedia(newMedia);
+                    view.displaySuccessBanner("created", newMedia.getFormat(), newMedia.getTitle());
                     break;
                 case 3:
-                    view.print("Create Library");
+                    view.print("View Specific Media Item");
                     break;
                 case 4:
-                    view.print("View Specific Media");
+                    view.print("Move Media Item");
                     break;
                 case 5:
-                    view.print("View Specific Library");
-                    break;
-                case 6:
                     view.print("Remove Media");
                     break;
+                case 6:
+                    // CREATE NEW LIBRARY
+                    Library newLibrary = view.
+                    break;
                 case 7:
-                    view.print("Remove Library");
+                    view.print("List Libraries");
                     break;
                 case 8:
-                    view.print("Move Media Item");
+                    view.print("Remove Library");
                     break;
                 case 9:
                     isRunning = false;
@@ -78,4 +83,5 @@ public class MediaLibraryController {
     private List<Media> getMediaList() {
         return dao.getAllMedia();
     }
+    
 }
