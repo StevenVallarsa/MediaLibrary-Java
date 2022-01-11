@@ -51,7 +51,7 @@ public interface MediaLibraryDao {
      * @param mediaID ID of the media item to be retrieved
      * @return Media object of the given mediaID, or null if no such ID exists
      */
-    Media getMedia(String mediaID);
+    List<Media> findMedia(String searchTerm);
     
     /**
      * Returns a Library object with the given ID

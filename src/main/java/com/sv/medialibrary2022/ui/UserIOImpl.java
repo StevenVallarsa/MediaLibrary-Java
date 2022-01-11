@@ -21,9 +21,13 @@ public class UserIOImpl implements UserIO {
     
     @Override
     public void printMedia(String prompt, String[] args) {
-        System.out.printf(prompt, args[0], args[1], args[2], args[3]);
+        if (args.length == 4) {
+            System.out.printf(prompt, args[0], args[1], args[2], args[3]);
+        } else {
+            System.out.printf(prompt, args[0], args[1], args[2], args[3], args[4]);
+        }
     }
-
+  
     @Override
     public String readString(String prompt) {
         print(prompt);

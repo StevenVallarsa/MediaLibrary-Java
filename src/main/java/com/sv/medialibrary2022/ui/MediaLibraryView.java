@@ -26,7 +26,7 @@ public class MediaLibraryView {
             io.print("=========");
             io.print("1. List Media by Libraries");
             io.print("2. Create Media");
-            io.print("3. View a Media Item");
+            io.print("3. Search Media");
             io.print("4. Move Media Item");
             io.print("5. Remove Media");    
             io.print("6. Create Library");
@@ -45,20 +45,12 @@ public class MediaLibraryView {
             Media item = new Media();
             
             item.setTitle(io.readString("Title"));
-            String creator = io.readString("Creator");
-            String description = io.readString("Description");
-            String year = io.readString("Year");
-            String genre = io.readString("Genre");
-            String format = io.readString("Media format");
-            String libraryID = "00"; // All media default to return cart on creation
-            item.setCreator(creator);
-            item.setDescription(description);
-            item.setYear(year);
-            item.setGenre(genre);
-            item.setFormat(format);
-            item.setLibrary(libraryID);
-            
-            
+            item.setCreator(io.readString("Creator"));
+            item.setDescription(io.readString("Description"));
+            item.setYear(io.readString("Year"));
+            item.setGenre(io.readString("Genre"));
+            item.setFormat(io.readString("Media format"));
+            item.setLibrary("00");
             
             return item;
         }
@@ -70,11 +62,10 @@ public class MediaLibraryView {
             
             Library newLibrary = new Library();
             newLibrary.setName(io.readString("New library name"));
+            newLibrary.setDescription(io.readString("Description"));
             newLibrary.setLocation(io.readString("Location"));
             return newLibrary;
         }
-            
-        
         
         public void displaySuccessBanner(String action, String format, String title) {
             io.print("You successfully " + action + " a " + format + " with the title of \" + title + \".");
@@ -84,7 +75,7 @@ public class MediaLibraryView {
             
             for (Library library : libraries) {
                 io.print("\n-+-+-+-+-+-+-+-+-+-+-+-+");
-                io.print(library.getLibraryID() + " : " + library.getDescription() + " : " + library.getLocation());
+                io.print(library.getLibraryID() + " : " + library.getName()+ " : " + library.getLocation());
                 io.print("-+-+-+-+-+-+-+-+-+-+-+-+");
                 for (Media item : media) {
                     
@@ -105,5 +96,37 @@ public class MediaLibraryView {
                 }
             }
         }
+        
+        public String getSearchTerm() {
+            return io.readString("What are you looking for?");
+        }
+        
+        public void displaySearchResults(List<Media> searchResults) {
+            io.print("\n-+-+-+-+-+-+-+-+-+-+");
+            io.print("SEARCH MEDIA LIBRARY");
+            io.print("-+-+-+-+-+-+-+-+-+-+");
+            io.printMedia("%s : %s : %-30s : %-20s : %s%n",new String[] {"ID", "LIB", "TITLE", "CREATOR", "FORMAT"});
+            
+            
+            for (Media m : searchResults) {
+                String id = m.getMediaID();
+                String title = m.getTitle();
+                String creator = m.getCreator();
+                String format = m.getFormat();
+                String lib = m.getLibrary();
+                
+                if (title.length() > 29) {
+                    title = title.substring(0, 27) + "...";
+                }
+                if (creator.length() > 19) {
+                    creator = creator.substring(0, 17) + "...";
+                }
+                
+                io.printMedia("%s : %s : %-30s : %-20s : %s%n",new String[] {id, lib, title, creator, format});
+                
+            }
+            
+        }
+        
  
 }

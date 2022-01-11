@@ -44,7 +44,10 @@ public class MediaLibraryController {
                     view.displaySuccessBanner("created", newMedia.getFormat(), newMedia.getTitle());
                     break;
                 case 3:
-                    view.print("View Specific Media Item");
+                    // SEARCH MEDIA
+                    List<Media> results = dao.findMedia(view.getSearchTerm());
+                    view.displaySearchResults(results);
+                    
                     break;
                 case 4:
                     view.print("Move Media Item");
@@ -54,7 +57,9 @@ public class MediaLibraryController {
                     break;
                 case 6:
                     // CREATE NEW LIBRARY
-                    Library newLibrary = view.
+                    Library newLibrary = view.getNewLibraryInfo();
+                    dao.addLibrary(newLibrary);
+                    view.print("You successfully created a new library named \"" + newLibrary.getName() + "\"");
                     break;
                 case 7:
                     view.print("List Libraries");

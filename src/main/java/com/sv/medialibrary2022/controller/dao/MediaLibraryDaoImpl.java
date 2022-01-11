@@ -33,12 +33,12 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     
     private void setDefaultLibrary() {
         Library lib = new Library("00");
-        lib.setDescription("Default Library");
+        lib.setName("Default Library");
         lib.setLocation("Book Return Cart");
         libraries.put(lib.getLibraryID(), lib);
         
-        Library lib2 = new Library("01");
-        lib2.setDescription("Visual Media Shelf");
+        Library lib2 = new Library(String.valueOf(libraryIndex++));
+        lib2.setName("Visual Media Shelf");
         lib2.setLocation("By TV");
         libraries.put(lib2.getLibraryID(), lib2);
         
@@ -49,36 +49,51 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         Media m1 = new Media(String.valueOf(mediaIndex++));
         m1.setTitle("2001: A Space Odyssey");
         m1.setCreator("Arthur C Clark");
+        m1.setDescription("");
+        m1.setYear("1968");
+        m1.setGenre("Sci Fi");
         m1.setFormat("Paperback");
+        m1.setLibrary("00");
+        media.put(m1.getMediaID(), m1);
         
         Media mm1 = new Media(String.valueOf(mediaIndex++));
         mm1.setTitle("2001: A Space Odyssey");
         mm1.setCreator("Arthur C Clark / Stanley Kubrick");
-        mm1.setFormat("DVD");
+        mm1.setDescription("");
         mm1.setYear("1968");
-        mm1.setLibrary("01");
-        
+        mm1.setGenre("Sci Fi");
+        mm1.setFormat("DVD");
+        mm1.setLibrary("00");
+        media.put(mm1.getMediaID(), mm1);
         
         Media m2 = new Media(String.valueOf(mediaIndex++));
         m2.setTitle("2010: Odyssey Two");
         m2.setCreator("Arthur C Clark");
+        m2.setDescription("");
+        m2.setYear("1982");
+        m2.setGenre("Sci Fi");
         m2.setFormat("Paperback");
+        m2.setLibrary("00");
+        media.put(m2.getMediaID(), m2);
 
         Media m3 = new Media(String.valueOf(mediaIndex++));
         m3.setTitle("2061: Odyssey Three");
         m3.setCreator("Arthur C Clark");
+        m3.setDescription("");
+        m3.setYear("1987");
+        m3.setGenre("Sci Fi");
         m3.setFormat("Hard Cover");
+        media.put(m3.getMediaID(), m3);
         
         Media m4 = new Media(String.valueOf(mediaIndex++));
         m4.setTitle("3001: The Final Odyssey");
         m4.setCreator("Arthur C Clark");
+        m4.setDescription("test");
+        m4.setYear("1997");
+        m4.setGenre("Sci Fi");
         m4.setFormat("Hard Cover");
-        
-        media.put(m1.getMediaID(), m1);
-        media.put(m2.getMediaID(), m2);
-        media.put(m3.getMediaID(), m3);
         media.put(m4.getMediaID(), m4);
-        media.put(mm1.getMediaID(), mm1);
+        
     }
 
     @Override
@@ -107,8 +122,26 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
 
     @Override
-    public Media getMedia(String mediaID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Media> findMedia(String searchTerm) {
+        List<Media> media = getAllMedia();
+        List<Media> results = new ArrayList<>();
+        searchTerm = searchTerm.toLowerCase();
+        for (Media m : media) {
+            String title = m.getTitle().toLowerCase();
+            System.out.println(m.getTitle().toLowerCase());
+            System.out.println(searchTerm);
+            if (m.getMediaID().contains(searchTerm) ||
+                    m.getTitle().toLowerCase().contains(searchTerm) ||
+                    m.getDescription().toLowerCase().contains(searchTerm) ||
+                    m.getCreator().toLowerCase().contains(searchTerm) ||
+                    m.getFormat().toLowerCase().contains(searchTerm) ||
+                    m.getYear().contains(searchTerm) ||
+                    m.getFormat().toLowerCase().contains(searchTerm) ||
+                    m.getGenre().toLowerCase().contains(searchTerm) ) {
+                results.add(m);
+            }
+        }
+        return results;
     }
 
     @Override
