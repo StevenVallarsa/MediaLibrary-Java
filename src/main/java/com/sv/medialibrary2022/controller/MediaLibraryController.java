@@ -1,9 +1,14 @@
 
 package com.sv.medialibrary2022.controller;
 
+import com.sv.medialibrary2022.controller.dao.MediaLibraryDao;
+import com.sv.medialibrary2022.controller.dao.MediaLibraryDaoImpl;
+import com.sv.medialibrary2022.dto.Library;
+import com.sv.medialibrary2022.dto.Media;
 import com.sv.medialibrary2022.ui.MediaLibraryView;
 import com.sv.medialibrary2022.ui.UserIO;
 import com.sv.medialibrary2022.ui.UserIOImpl;
+import java.util.List;
 
 /**
  *
@@ -15,7 +20,7 @@ import com.sv.medialibrary2022.ui.UserIOImpl;
 public class MediaLibraryController {
     
     private MediaLibraryView view = new MediaLibraryView();
-    private UserIO io = new UserIOImpl();
+    private MediaLibraryDao dao = new MediaLibraryDaoImpl();
     
     public void run() {
         boolean isRunning = true;
@@ -27,40 +32,50 @@ public class MediaLibraryController {
             
             switch(menuSelection) {
                 case 1:
-                    io.print("List Media & Libraries");
+                    List<Library> libraries = getLibraryList();
+                    List<Media> media = getMediaList();
+                    view.displayLibrariesAndMedia(libraries, media);
                     break;
                 case 2:
-                    io.print("Create Media");
+                    view.print("Create Media");
                     break;
                 case 3:
-                    io.print("Create Library");
+                    view.print("Create Library");
                     break;
                 case 4:
-                    io.print("View Specific Media");
+                    view.print("View Specific Media");
                     break;
                 case 5:
-                    io.print("View Specific Library");
+                    view.print("View Specific Library");
                     break;
                 case 6:
-                    io.print("Remove Media");
+                    view.print("Remove Media");
                     break;
                 case 7:
-                    io.print("Remove Library");
+                    view.print("Remove Library");
                     break;
                 case 8:
-                    io.print("Move Media Item");
+                    view.print("Move Media Item");
                     break;
                 case 9:
                     isRunning = false;
                     break;
                 default:
-                    io.print("UNKNOWN COMMAND");
+                    view.print("UNKNOWN COMMAND");
             }
         }
-        io.print("\nGOOD BYE!");
+        view.print("\nGOOD BYE!");
     }
 
     private int getMenuSelection() {
         return view.printMenuAndGetSelection();
+    }
+    
+    private List<Library> getLibraryList() {
+        return dao.getAllLibraries();
+    }
+
+    private List<Media> getMediaList() {
+        return dao.getAllMedia();
     }
 }

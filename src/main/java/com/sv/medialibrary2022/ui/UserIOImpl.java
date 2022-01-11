@@ -16,7 +16,12 @@ public class UserIOImpl implements UserIO {
 
     @Override
     public void print(String prompt) {
-        System.err.println(prompt);
+        System.out.println(prompt);
+    }
+    
+    @Override
+    public void printMedia(String prompt, String[] args) {
+        System.out.printf(prompt, args[0], args[1], args[2], args[3]);
     }
 
     @Override

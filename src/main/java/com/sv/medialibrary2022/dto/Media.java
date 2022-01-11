@@ -10,14 +10,6 @@ package com.sv.medialibrary2022.dto;
  */
 public class Media {
 
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    public void setLibraryID(String libraryID) {
-        this.libraryID = libraryID;
-    }
-    
     private String mediaID;
     private String title;
     private String creator;
@@ -25,26 +17,17 @@ public class Media {
     private String year;
     private String genre;
     private String format;
-    private String libraryID;
+    private String library;
     
+    // Once this entity is created as a database, the ID numbers  
+    // will be auto generatred in sequential order.
     public Media(String mediaID) {
         this.mediaID = mediaID;
+        this.library = "00"; // all new media put in default library upon creation
     }
-    
+
     public String getMediaID() {
         return mediaID;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setMediaID(String mediaID) {
-        this.mediaID = mediaID;
     }
 
     public String getTitle() {
@@ -59,8 +42,16 @@ public class Media {
         return creator;
     }
 
-    public void setAuthors(String author) {
-        this.creator = author;
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getYear() {
@@ -88,12 +79,10 @@ public class Media {
     }
 
     public String getLibrary() {
-        return libraryID;
+        return library;
     }
 
-    public void setLibrary(String libraryID) {
-        this.libraryID = libraryID;
+    public void setLibrary(String library) {
+        this.library = library;
     }
-    
-
 }

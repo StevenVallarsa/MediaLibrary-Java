@@ -14,13 +14,15 @@ public class Library {
     private String name;
     private String location;
     private String description;
+    
+    // Once this entity is created as a database, the ID numbers  
+    // will be auto generatred in sequential order.
+    public Library(String libraryID) {
+        this.libraryID = libraryID;
+    }
 
     public String getLibraryID() {
         return libraryID;
-    }
-
-    public void setLibraryID(String libraryID) {
-        this.libraryID = libraryID;
     }
 
     public String getLocation() {
