@@ -47,7 +47,7 @@ public class UserIOImpl implements UserIO {
             if (input >= min && input <= max) {
                 return input;
             } else {
-                print("That number wasn't between " + min + " and " + max + ". Please try again.\n");
+                print("That wasn't between " + min + " and " + max + ". Please try again.");
             }
         }
     }
