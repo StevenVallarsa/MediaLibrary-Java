@@ -1,9 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
 package com.sv.medialibrary2022;
+
+import com.sv.medialibrary2022.ui.UserIO;
+import com.sv.medialibrary2022.ui.UserIOImpl;
 
 /**
  *
@@ -14,5 +13,22 @@ package com.sv.medialibrary2022;
  *          using CRUD MVC pattern
  */
 public class App {
-
+    public static void main(String[] args) {
+        
+        // TESTING UserIO
+        
+        UserIO io = new UserIOImpl();
+        
+        io.print("Print");
+        
+        String string = io.readString("readString");
+        io.print("You typed in this string: " + string);
+        
+        int num = io.readInt("readInt:");
+        io.print("You typed in this int: " + num);
+        
+        int numMinMax = io.readInt("readIntMinMax:", 0, 10);
+        io.print("You typed in this int between 0 and 10: " + numMinMax);
+        
+    }
 }
