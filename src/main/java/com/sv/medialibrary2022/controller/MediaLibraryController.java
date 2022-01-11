@@ -1,6 +1,7 @@
 
 package com.sv.medialibrary2022.controller;
 
+import com.sv.medialibrary2022.ui.MediaLibraryView;
 import com.sv.medialibrary2022.ui.UserIO;
 import com.sv.medialibrary2022.ui.UserIOImpl;
 
@@ -13,25 +14,16 @@ import com.sv.medialibrary2022.ui.UserIOImpl;
  */
 public class MediaLibraryController {
     
-    UserIO io = new UserIOImpl();
+    private MediaLibraryView view = new MediaLibraryView();
+    private UserIO io = new UserIOImpl();
     
     public void run() {
         boolean isRunning = true;
         int menuSelection = 0;
         
         while(isRunning) {
-            io.print("\nMAIN MENU");
-            io.print("=========");
-            io.print("1. List Media & Libraries");
-            io.print("2. Create Media");
-            io.print("3. Create Library");
-            io.print("4. View Specific Media");
-            io.print("5. View Specific Library");
-            io.print("6. Remove Media");
-            io.print("7. Remove Library");
-            io.print("8. EXIT");
             
-            menuSelection = io.readInt("\nWhat is your pleasure?", 1, 8);
+            menuSelection = getMenuSelection();
             
             switch(menuSelection) {
                 case 1:
@@ -63,5 +55,9 @@ public class MediaLibraryController {
             }
         }
         io.print("\nGOOD BYE!");
+    }
+
+    private int getMenuSelection() {
+        return view.printMenuAndGetSelection();
     }
 }
