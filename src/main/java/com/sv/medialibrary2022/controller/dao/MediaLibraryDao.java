@@ -45,7 +45,7 @@ public interface MediaLibraryDao {
      * @param libraryItem to be added to the list of libraries
      * @return the library object if duplicate, or null if unique
      */
-    Library addLibrary(String libraryID, Media libraryItem);
+    Library addLibrary(String libraryID, Library libraryItem);
     
     /**
      * Returns a Media object with the given ID

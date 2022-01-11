@@ -1,6 +1,8 @@
 
 package com.sv.medialibrary2022.ui;
 
+import com.sv.medialibrary2022.dto.Media;
+
 /**
  *
  * @author: Steven Vallarsa
@@ -28,4 +30,27 @@ public class MediaLibraryView {
             
             return io.readInt("\nWhat is your pleasure?", 1, 9);
         }
+        
+        public Media getNewMediaInfo() {
+            String mediaID = io.readString("ID #");
+            String title = io.readString("Title");
+            String creator = io.readString("Creator");
+            String description = io.readString("Description");
+            String year = io.readString("Year");
+            String genre = io.readString("Genre");
+            String format = io.readString("Media format");
+            String libraryID = "00"; // All media default to return cart on creation
+            
+            Media item = new Media(mediaID);
+            item.setTitle(title);
+            item.setCreator(creator);
+            item.setDescription(description);
+            item.setYear(year);
+            item.setGenre(genre);
+            item.setFormat(format);
+            item.setLibraryID(libraryID);
+            
+            return item;
+        }
+ 
 }

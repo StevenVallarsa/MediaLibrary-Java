@@ -3,36 +3,58 @@ package com.sv.medialibrary2022.controller.dao;
 
 import com.sv.medialibrary2022.dto.Library;
 import com.sv.medialibrary2022.dto.Media;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 /**
  *
  * @author: Steven Vallarsa
  *   email: stevenvallarsa@gmail.com
- *    date: 2022-00-00
+ *    date: 2022-01-10
  * purpose: 
  */
 public class MediaLibraryDaoImpl implements MediaLibraryDao {
+    
+    private Map<String, Media> media = new HashMap<>();
+    private Map<String, Library> libraries = new HashMap<>();
+    
+    public MediaLibraryDaoImpl() {
+        setDefaultLibrary();
+    }
+    
+    private void setDefaultLibrary() {
+        Library lib = new Library();
+        lib.setLibraryID("00");
+        lib.setDescription("Default Library");
+        lib.setLocation("Book Return");
+        libraries.put(lib.getLibraryID(), lib);
+    }
 
     @Override
     public List<Media> getAllMedia() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new ArrayList<Media>(media.values());
     }
 
     @Override
     public List<Library> getAllLibraries() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new ArrayList<Library>(libraries.values());
+        
     }
 
     @Override
     public Media addMedia(String mediaID, Media mediaItem) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Media prevMedia = media.put(mediaID, mediaItem);
+        return prevMedia;
     }
 
     @Override
-    public Library addLibrary(String libraryID, Media libraryItem) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Library addLibrary(String libraryID, Library libraryItem) {
+        Library prevLibrary = libraries.put(libraryID, libraryItem);
+        return prevLibrary;
     }
 
     @Override
@@ -42,7 +64,7 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
 
     @Override
     public Library getLibrary(String libraryID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return libraries.get(libraryID);
     }
 
     @Override

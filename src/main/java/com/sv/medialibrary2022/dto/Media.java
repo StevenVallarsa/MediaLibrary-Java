@@ -9,16 +9,27 @@ package com.sv.medialibrary2022.dto;
  * purpose: 
  */
 public class Media {
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public void setLibraryID(String libraryID) {
+        this.libraryID = libraryID;
+    }
     
     private String mediaID;
     private String title;
-    private String[] authors;
-    private String publisher;
+    private String creator;
     private String description;
     private String year;
     private String genre;
     private String format;
-    private Library library;
+    private String libraryID;
+    
+    public Media(String mediaID) {
+        this.mediaID = mediaID;
+    }
     
     public String getMediaID() {
         return mediaID;
@@ -44,20 +55,12 @@ public class Media {
         this.title = title;
     }
 
-    public String[] getAuthors() {
-        return authors;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setAuthors(String[] authors) {
-        this.authors = authors;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
+    public void setAuthors(String author) {
+        this.creator = author;
     }
 
     public String getYear() {
@@ -84,12 +87,12 @@ public class Media {
         this.format = format;
     }
 
-    public Library getLibrary() {
-        return library;
+    public String getLibrary() {
+        return libraryID;
     }
 
-    public void setLibrary(Library library) {
-        this.library = library;
+    public void setLibrary(String libraryID) {
+        this.libraryID = libraryID;
     }
     
 
