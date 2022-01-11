@@ -48,6 +48,9 @@ public class MediaLibraryController {
                     io.print("Remove Library");
                     break;
                 case 8:
+                    io.print("Move Media Item");
+                    break;
+                case 9:
                     isRunning = false;
                     break;
                 default:

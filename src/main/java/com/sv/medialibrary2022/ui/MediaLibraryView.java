@@ -16,15 +16,16 @@ public class MediaLibraryView {
 
             io.print("\nMAIN MENU");
             io.print("=========");
-            io.print("1. List Media & Libraries");
+            io.print("1. List Media by Libraries");
             io.print("2. Create Media");
             io.print("3. Create Library");
             io.print("4. View Specific Media");
             io.print("5. View Specific Library");
             io.print("6. Remove Media");
             io.print("7. Remove Library");
-            io.print("8. EXIT");
+            io.print("8. Move Media Item");
+            io.print("9. EXIT");
             
-            return io.readInt("\nWhat is your pleasure?", 1, 8);
+            return io.readInt("\nWhat is your pleasure?", 1, 9);
         }
 }
