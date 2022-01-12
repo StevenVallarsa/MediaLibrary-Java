@@ -55,8 +55,13 @@ public class MediaLibraryController {
                     view.displaySearchResults(results);
                     break;
                     
-                // MODIFY MEDIA
+                // GET MEDIA DETAILS
                 case 4:
+                    view.displayMediaItem(libraries, media);
+                    break;
+                    
+                // MODIFY MEDIA
+                case 5:
                     view.displayLibrariesAndMedia(libraries, media);
                     String[] revisedItem = view.modifyMediaOrLibrary(libraries, media);
                     String item = "";
@@ -76,29 +81,31 @@ public class MediaLibraryController {
                     break;
                     
                 // REMOVE MEDIA OR LIBRARY   
-                case 5:
+                case 6:
                     view.displayLibrariesAndMedia(libraries, media);
                     String id = view.deleteMediaOrLibrary(libraries, media);
                     if (id != null) {
                         if (id.length() == 3) {
                             Media deletedItem = dao.removeMedia(id);
-                            view.displaySuccessBanner("deleted", deletedItem.getFormat(), deletedItem.getTitle());
+                            view.displaySuccessBanner("removed", deletedItem.getFormat(), deletedItem.getTitle());
                         } else {
                             Library deletedLibrary = dao.removeLibrary(id);
-                            view.displaySuccessBanner("deleted", "library", deletedLibrary.getName());
+                            view.displaySuccessBanner("removed", "library", deletedLibrary.getName());
                         }
                     }
                     break;
-                case 6:
+                case 7:
                     // CREATE NEW LIBRARY
                     Library newLibrary = view.createNewLibrary();
                     dao.addLibrary(newLibrary);
                     view.print("You successfully created a new library named \"" + newLibrary.getName() + "\"");
                     break;
-                case 7:
-                    view.print("List Libraries");
-                    break;
+                
+                // LIST LIBRARIES
                 case 8:
+                    view.displayLibraries(libraries);
+                    break;
+                case 9:
                     isRunning = false;
                     break;
                 default:

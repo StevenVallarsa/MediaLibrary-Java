@@ -35,11 +35,13 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         Library lib = new Library("00");
         lib.setName("Default Library");
         lib.setLocation("Book Return Cart");
+        lib.setDescription("The default location for new books");
         libraries.put(lib.getLibraryID(), lib);
         
         Library lib2 = new Library(String.valueOf(libraryIndex++));
         lib2.setName("Visual Media Shelf");
         lib2.setLocation("By TV");
+        lib2.setDescription("");
         libraries.put(lib2.getLibraryID(), lib2);
         
     }

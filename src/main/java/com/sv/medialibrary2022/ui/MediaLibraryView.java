@@ -27,14 +27,15 @@ public class MediaLibraryView {
     public int printMenuAndGetSelection() {
         io.print("\nMAIN MENU");
         io.print("=========");
-        io.print("1. List Media by Libraries");
+        io.print("1. List Media by Library");
         io.print("2. Create Media");
         io.print("3. Search Media");
-        io.print("4. Modify Media or Library ");
-        io.print("5. Remove Media or Library");    
-        io.print("6. Create Library");
-        io.print("7. List Libraries");
-        io.print("8. EXIT");
+        io.print("4. Get Media Details");
+        io.print("5. Modify Media or Library ");
+        io.print("6. Remove Media or Library");    
+        io.print("7. Create Library");
+        io.print("8. List Libraries");
+        io.print("9. EXIT");
 
         return io.readInt("\nWhat would like to do?", 1, 9);
     }
@@ -70,7 +71,7 @@ public class MediaLibraryView {
     }
 
     public void displaySuccessBanner(String action, String format, String title) {
-        io.print("You successfully " + action + " a " + format + " with the title of \"" + title + "\".");
+        io.print("You successfully " + action + " a " + format + " with the name of \"" + title + "\".");
     }
 
     public void displayLibrariesAndMedia(List<Library> libraries, List<Media> media) {
@@ -96,6 +97,38 @@ public class MediaLibraryView {
                     io.printMedia("%s: %-30s : %-20s : %s%n",new String[] {id, title, creator, format});
                 }
             }
+        }
+    }
+    
+    public void displayLibraries(List<Library> libraries) {
+        io.printMedia(" %s: %-20s : %-20s : %s%n", new String[] {"#", "NAME", "LOCATION", "DESCRIPTION"});
+        for (Library library : libraries) {
+            io.printMedia("%s: %-20s : %-20s : %s%n", new String[] {library.getLibraryID(), library.getName(), library.getLocation(), library.getDescription() });
+        }
+    }
+    
+    public void displayMediaItem(List<Library> libraries, List<Media> media) {
+        String id = getIdNumber(true);
+        if (id.isBlank()) {
+            // Nothing to see here. Move along. Move along.
+        } else if (id.length() == 3) {
+            for (Media m : media) {
+                if (m.getMediaID().equals(id)) {
+                    io.print("       NAME: " + m.getTitle());
+                    io.print("    CREATOR: " + m.getCreator());
+                    io.print("DESCRIPTION: " + m.getDescription());
+                    io.print("       YEAR: " + m.getYear());
+                    io.print("      GENRE: " + m.getGenre());
+                    io.print("     FORMAT: " + m.getFormat());
+                    for (Library library : libraries) {
+                        if (library.getLibraryID().equals(m.getLibrary())) {
+                            io.print("    LIBRARY: " + library.getName());
+                        }
+                    }
+                }
+            }
+        } else {
+            io.print("That wasn't a valid entry");
         }
     }
 
@@ -131,7 +164,7 @@ public class MediaLibraryView {
 
     public String[] modifyMediaOrLibrary(List<Library> libraries, List<Media> media) {
         
-        String input = getIdNumber();
+        String input = getIdNumber(false);
         if (input == null) return null;
         
         if (input.length() == 2) {
@@ -221,7 +254,10 @@ public class MediaLibraryView {
     }
     
     public String deleteMediaOrLibrary(List<Library> libraries, List<Media> media) {
-        String input = getIdNumber();
+        io.print("\n-+-+-+-+-+-+-+-+-+-+-+-");
+        io.print("REMOVE MEDIA OR LIBRARY");
+        io.print("-+-+-+-+-+-+-+-+-+-+-+-");
+        String input = getIdNumber(false);
         if (input == null) return null;
         if (input.length() == 2) {
             Library foundLibrary = findLibrary(libraries, input);
@@ -238,14 +274,16 @@ public class MediaLibraryView {
         }
     }
     
-    public String getIdNumber() {
-        String input = io.readString("Select one of the ID numbers above");
+    public String getIdNumber(boolean mediaSearch) {
+        io.print("\nSelect one of the ID numbers above");
+        String input = io.readString("PRESS ENTER TO RETURN TO MAIN MENU");
+        if (input.isBlank()) return null;
         try {
             int testForInt = Integer.parseInt(input);
             if (input.length() < 2 || input.length() > 3) {
                 throw new Exception("That's not a valid ID number");
             }
-            if (input.equals("00")) {
+            if (input.equals("00") && !mediaSearch) {
                 throw new Exception("You cannot modify the default library");
             }
             
@@ -258,5 +296,4 @@ public class MediaLibraryView {
         }
         return input;
     }
-
 }
