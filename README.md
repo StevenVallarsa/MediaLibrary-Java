@@ -35,6 +35,11 @@ com.sv.MediaLibrary.dto
   - UserIOConsoleImpl.java
 
 ### 2 - Second Iteration will add a Service Layer ("2 service layer" branch)
+- add dependency injection
+- add custom Exception class to encapsulate errors
+- add persistance via text files
+- add marshalling and unmarshalling to read and write to text files
+
 
 ### 3 - Third Iteration will add Unit Testing ("3 unit testing" branch)
 

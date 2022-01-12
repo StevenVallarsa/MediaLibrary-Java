@@ -2,6 +2,7 @@
 package com.sv.medialibrary2022.controller;
 
 import com.sv.medialibrary2022.dao.MediaLibraryDao;
+import com.sv.medialibrary2022.dao.MediaLibraryDaoException;
 import com.sv.medialibrary2022.dao.MediaLibraryDaoImpl;
 import com.sv.medialibrary2022.dto.Library;
 import com.sv.medialibrary2022.dto.Media;
@@ -28,7 +29,7 @@ public class MediaLibraryController {
         this.view = view;
     }
     
-    public void run() {
+    public void run() throws MediaLibraryDaoException {
         boolean isRunning = true;
         int menuSelection = 0;
         
@@ -125,7 +126,7 @@ public class MediaLibraryController {
         return view.printMenuAndGetSelection();
     }
     
-    private List<Library> getLibraryList() {
+    private List<Library> getLibraryList() throws MediaLibraryDaoException {
         return dao.getAllLibraries();
     }
 

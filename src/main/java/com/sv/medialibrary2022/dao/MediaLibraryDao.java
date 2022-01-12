@@ -23,7 +23,7 @@ public interface MediaLibraryDao {
      * 
      * @return List containing all Libraries
      */
-    List<Library> getAllLibraries();
+    List<Library> getAllLibraries() throws MediaLibraryDaoException;
     
     /**
      * Add the given media to the collection and associate it with its ID.
@@ -59,7 +59,7 @@ public interface MediaLibraryDao {
      * @param libraryID ID of the Library item to be retrieved
      * @return Library object of the given libraryID, or null if no such ID exists
      */
-    Library getLibrary(String libraryID);
+    Library getLibrary (String libraryID);
     
     /**
      * Removes Media object with the given ID

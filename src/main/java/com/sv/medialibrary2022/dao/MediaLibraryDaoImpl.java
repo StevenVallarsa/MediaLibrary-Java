@@ -3,11 +3,15 @@ package com.sv.medialibrary2022.dao;
 
 import com.sv.medialibrary2022.dto.Library;
 import com.sv.medialibrary2022.dto.Media;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 
 /**
@@ -25,9 +29,13 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     private int mediaIndex = 100;
     private int libraryIndex = 10;
     
+    public static final String LIBRARY_FILE = "library.txt";
+    public static final String MEDIA_FILE = "media.txt";
+    public static final String DELIMITER = "::";
+    
     // Creates default library at runtime
     public MediaLibraryDaoImpl() {
-        setDefaultLibrary();
+//        setDefaultLibrary();
         setDefaultMedia();
     }
     
@@ -104,7 +112,8 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
 
     @Override
-    public List<Library> getAllLibraries() {
+    public List<Library> getAllLibraries() throws MediaLibraryDaoException {
+        loadLibrary();
         return new ArrayList<Library>(libraries.values());
         
     }
@@ -190,6 +199,53 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         libraries.put(l.getLibraryID(), l);
     }
 
-
+    private Library unmarshallLibrary(String libraryAsText) {
+        String[] libraryTokens = libraryAsText.split(DELIMITER);
+        String libraryID = libraryTokens[0];
+        
+        Library libraryFromFile = new Library(libraryID);
+        libraryFromFile.setName(libraryTokens[1]);
+        libraryFromFile.setLocation(libraryTokens[2]);
+        libraryFromFile.setDescription(libraryTokens[3]);
+        
+        return libraryFromFile;
+    }
+    
+    private Media unmarshallMedia(String mediaAsText) {
+        String[] mediaTokens = mediaAsText.split(DELIMITER);
+        
+        Media mediaFromFile = new Media(mediaTokens[0]);
+        mediaFromFile.setTitle(mediaTokens[1]);
+        mediaFromFile.setCreator(mediaTokens[2]);
+        mediaFromFile.setDescription(mediaTokens[3]);
+        mediaFromFile.setYear(mediaTokens[4]);
+        mediaFromFile.setGenre(mediaTokens[5]);
+        mediaFromFile.setFormat(mediaTokens[6]);
+        mediaFromFile.setLibrary(mediaTokens[7]);
+        
+        return mediaFromFile;
+    }
+    
+    private void loadLibrary() throws MediaLibraryDaoException {
+        Scanner scanner;
+        
+        try {
+            scanner = new Scanner(new BufferedReader(new FileReader(LIBRARY_FILE)));
+        } catch (FileNotFoundException e) {
+            throw new MediaLibraryDaoException("Could not load library into memory.", e);
+        }
+        
+        libraryIndex = Integer.parseInt(scanner.nextLine());
+        
+        String currentLine;
+        Library currentLibrary;
+        
+        while (scanner.hasNextLine()) {
+            currentLine = scanner.nextLine();
+            currentLibrary = unmarshallLibrary(currentLine);
+            libraries.put(currentLibrary.getLibraryID(), currentLibrary);
+        }
+        scanner.close();
+    }
 
 }
