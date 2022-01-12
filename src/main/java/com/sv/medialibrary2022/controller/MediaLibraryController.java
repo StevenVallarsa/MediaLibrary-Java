@@ -29,18 +29,21 @@ public class MediaLibraryController {
         
         while(isRunning) {
             
+            List<Media> media = getMediaList();
+            List<Library> libraries = getLibraryList();
+
             menuSelection = getMenuSelection();
             
             switch(menuSelection) {
                 
                 // LIST MEDIA BY LIBRARIES
                 case 1:
-                    view.displayLibrariesAndMedia(getLibraryList(), getMediaList());
+                    view.displayLibrariesAndMedia(libraries, media);
                     break;
                     
                 // CREATE NEW MEDIA ITEM
                 case 2:
-                    Media newMedia = view.getNewMediaInfo();
+                    Media newMedia = view.createNewMedia();
                     dao.addMedia(newMedia);
                     view.displaySuccessBanner("created", newMedia.getFormat(), newMedia.getTitle());
                     break;
@@ -54,26 +57,40 @@ public class MediaLibraryController {
                     
                 // MODIFY MEDIA
                 case 4:
-                    List<Media> media = getMediaList();
-                    List<Library> libraries = getLibraryList();
                     view.displayLibrariesAndMedia(libraries, media);
                     String[] revisedItem = view.modifyMediaOrLibrary(libraries, media);
+                    String item = "";
+                    String title = "";
                     if (revisedItem != null) {
                         if (revisedItem.length == 4) {
                             dao.modifyLibrary(revisedItem);
+                            item = "library";
+                            title = revisedItem[1];
                         } else {
                             dao.modifyMedia(revisedItem);
+                            item = revisedItem[6];
+                            title = revisedItem[1];
                         }
+                        view.displaySuccessBanner("modified", item, title);
                     } 
                     break;
                     
-                // REMOVE MEDIA    
+                // REMOVE MEDIA OR LIBRARY   
                 case 5:
-                    view.print("Remove Media");
+                    view.displayLibrariesAndMedia(libraries, media);
+                    String id = view.deleteMediaOrLibrary(libraries, media);
+                    if (id != null) {
+                        if (id.length() == 3) {
+                            Media deletedItem = dao.removeMedia(id);
+                            view.displaySuccessBanner("deleted", deletedItem.getFormat(), deletedItem.getTitle());
+                        } else {
+                            view.print("LIBRARY NOT DELETED");
+                        }
+                    }
                     break;
                 case 6:
                     // CREATE NEW LIBRARY
-                    Library newLibrary = view.getNewLibraryInfo();
+                    Library newLibrary = view.createNewLibrary();
                     dao.addLibrary(newLibrary);
                     view.print("You successfully created a new library named \"" + newLibrary.getName() + "\"");
                     break;
@@ -81,9 +98,6 @@ public class MediaLibraryController {
                     view.print("List Libraries");
                     break;
                 case 8:
-                    view.print("Remove Library");
-                    break;
-                case 9:
                     isRunning = false;
                     break;
                 default:

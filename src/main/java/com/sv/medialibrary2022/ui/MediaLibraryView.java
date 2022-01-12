@@ -31,16 +31,15 @@ public class MediaLibraryView {
         io.print("2. Create Media");
         io.print("3. Search Media");
         io.print("4. Modify Media or Library ");
-        io.print("5. Remove Media");    
+        io.print("5. Remove Media or Library");    
         io.print("6. Create Library");
         io.print("7. List Libraries");
-        io.print("8. Remove Library");
-        io.print("9. EXIT");
+        io.print("8. EXIT");
 
         return io.readInt("\nWhat would like to do?", 1, 9);
     }
 
-    public Media getNewMediaInfo() {
+    public Media createNewMedia() {
         io.print("\n-+-+-+-+-+-+-+-+-+-+-+-");
         io.print("CREATE A NEW MEDIA ITEM");
         io.print("-+-+-+-+-+-+-+-+-+-+-+-");
@@ -58,7 +57,7 @@ public class MediaLibraryView {
         return item;
     }
 
-    public Library getNewLibraryInfo() {
+    public Library createNewLibrary() {
         io.print("\n-+-+-+-+-+-+-+-+-+-+");
         io.print("CREATE A NEW LIBRARY");
         io.print("-+-+-+-+-+-+-+-+-+-+");
@@ -71,7 +70,7 @@ public class MediaLibraryView {
     }
 
     public void displaySuccessBanner(String action, String format, String title) {
-        io.print("You successfully " + action + " a " + format + " with the title of \" + title + \".");
+        io.print("You successfully " + action + " a " + format + " with the title of \"" + title + "\".");
     }
 
     public void displayLibrariesAndMedia(List<Library> libraries, List<Media> media) {
@@ -130,51 +129,48 @@ public class MediaLibraryView {
         }
     }
 
-    public void modifyMedia(Media item) {
-
-    }
-
     public String[] modifyMediaOrLibrary(List<Library> libraries, List<Media> media) {
-        String input = io.readString("Select one of the ID numbers above");
-        try {
-            int testForInt = Integer.parseInt(input);
-            if (input.length() < 2 || input.length() > 3) {
-                throw new Exception("That's not a valid ID number");
-            }
-            if (input.equals("00")) {
-                throw new Exception("You cannot modify the default library");
-            }
-            
-        } catch (NumberFormatException e) {
-            io.print("That's not an ID number");
-            return null;
-        } catch (Exception e) {
-            io.print(e.getMessage());
-            return null;
-        }
         
-        String[] libraryIDs = new String[libraries.size()];
-        for (int i = 0; i < libraries.size(); i++) {
-            libraryIDs[i] = libraries.get(i).getLibraryID();
-        }
+        String input = getIdNumber();
+        if (input == null) return null;
         
         if (input.length() == 2) {
-            for (Library library : libraries) {
-                if (library.getLibraryID().equals(input)) {
-                    return modifyLibrary(library);
-                }
+            Library foundLibrary = findLibrary(libraries, input);
+            if (foundLibrary == null) {
+                return null;
             }
-            io.print("That library doesn't exist");
-            return null;
+            return modifyLibrary(foundLibrary);
         } else {
-            for (Media item : media) {
-                if (item.getMediaID().equals(input)) {
-                    return modifyMediaItem(item, libraryIDs);
-                }
+            String[] libraryIDs = new String[libraries.size()];
+            for (int i = 0; i < libraries.size(); i++) {
+                libraryIDs[i] = libraries.get(i).getLibraryID();
             }
-            io.print("That media item doesn't exist");
-            return null;
+            Media foundMedia = findMedia(media, input);
+            if (foundMedia == null) {
+                return null;
+            }
+            return modifyMediaItem(foundMedia, libraryIDs);
         }
+    }
+    
+    private Media findMedia(List<Media> media, String input) {
+        for (Media item : media) {
+            if (item.getMediaID().equals(input)) {
+                return item;
+            }
+        }
+        io.print("That media item doesn't exist");        
+        return null;
+    }
+    
+    private Library findLibrary(List<Library> libraries, String input) {
+        for (Library library : libraries) {
+            if (library.getLibraryID().equals(input)) {
+                return library;
+            }
+        }
+        io.print("That library doesn't exist");
+        return null;
     }
     
     private String[] modifyLibrary(Library library) {
@@ -195,7 +191,6 @@ public class MediaLibraryView {
     }
     
     private String[] modifyMediaItem(Media media, String[] libraryIDs) {
-        
         io.print("\n-+-+-+-+-+-+-+-+-+-+");
         io.print("MODIFY MEDIA ITEM #" + media.getMediaID()+ ": " + media.getTitle());
         io.print("-+-+-+-+-+-+-+-+-+-+\n");
@@ -223,6 +218,45 @@ public class MediaLibraryView {
         io.print("That library doesn't exist. No changes were made.");
         
         return null;
+    }
+    
+    public String deleteMediaOrLibrary(List<Library> libraries, List<Media> media) {
+        String input = getIdNumber();
+        if (input == null) return null;
+        if (input.length() == 2) {
+            Library foundLibrary = findLibrary(libraries, input);
+            if (foundLibrary == null) {
+                return null;
+            }
+            return foundLibrary.getLibraryID();
+        } else {
+            Media foundMedia = findMedia(media, input);
+            if (foundMedia == null) {
+                return null;
+            }
+            return foundMedia.getMediaID();
+        }
+    }
+    
+    public String getIdNumber() {
+        String input = io.readString("Select one of the ID numbers above");
+        try {
+            int testForInt = Integer.parseInt(input);
+            if (input.length() < 2 || input.length() > 3) {
+                throw new Exception("That's not a valid ID number");
+            }
+            if (input.equals("00")) {
+                throw new Exception("You cannot modify the default library");
+            }
+            
+        } catch (NumberFormatException e) {
+            io.print("That's not an ID number");
+            return null;
+        } catch (Exception e) {
+            io.print(e.getMessage());
+            return null;
+        }
+        return input;
     }
 
 }
