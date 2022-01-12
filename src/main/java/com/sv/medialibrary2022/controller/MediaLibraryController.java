@@ -8,6 +8,7 @@ import com.sv.medialibrary2022.dto.Media;
 import com.sv.medialibrary2022.ui.MediaLibraryView;
 import com.sv.medialibrary2022.ui.UserIO;
 import com.sv.medialibrary2022.ui.UserIOImpl;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -59,11 +60,11 @@ public class MediaLibraryController {
                     String[] revisedItem = view.modifyMediaOrLibrary(libraries, media);
                     if (revisedItem != null) {
                         if (revisedItem.length == 4) {
-                            
+                            dao.modifyLibrary(revisedItem);
+                        } else {
+                            dao.modifyMedia(revisedItem);
                         }
-                    }
-                    
-                    
+                    } 
                     break;
                     
                 // REMOVE MEDIA    

@@ -82,17 +82,17 @@ public interface MediaLibraryDao {
     /**
      * Move the Media object of mediaID to Library object of libraryID
      * 
-     * @param modified Media object to be updated
+     * @param media String array of the items to modify an existing Media object
      * @return Media object (with Library ID)
      */
-    Media modifyMedia(Media media);
+    void modifyMedia(String[] media);
     
     /**
      * 
-     * @param movided Library object to be updated
+     * @param library String array of the items to modify an existing Library object
      * @return Library object 
      */
-    Library modifyLibrary(Library library);
+    void modifyLibrary(String[] library);
     
     
 

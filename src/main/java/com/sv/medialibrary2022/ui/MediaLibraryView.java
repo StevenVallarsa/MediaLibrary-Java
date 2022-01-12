@@ -30,7 +30,7 @@ public class MediaLibraryView {
         io.print("1. List Media by Libraries");
         io.print("2. Create Media");
         io.print("3. Search Media");
-        io.print("4. Modify or Move Media");
+        io.print("4. Modify Media or Library ");
         io.print("5. Remove Media");    
         io.print("6. Create Library");
         io.print("7. List Libraries");

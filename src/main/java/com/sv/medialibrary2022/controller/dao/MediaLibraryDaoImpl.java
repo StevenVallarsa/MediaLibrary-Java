@@ -160,13 +160,25 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
 
     @Override
-    public Media modifyMedia(Media media) {
-        return null;
+    public void modifyMedia(String[] mediaArray) {
+        Media m = new Media(mediaArray[0]);
+        m.setTitle(mediaArray[1]);
+        m.setCreator(mediaArray[2]);
+        m.setDescription(mediaArray[3]);
+        m.setYear(mediaArray[4]);
+        m.setGenre(mediaArray[5]);
+        m.setFormat(mediaArray[6]);
+        m.setLibrary(mediaArray[7]);
+        media.put(m.getMediaID(), m);
     }
     
     @Override
-    public Library modifyLibrary(Library library) {
-        return null;
+    public void modifyLibrary(String[] library) {
+        Library l = new Library(library[0]);
+        l.setName(library[1]);
+        l.setLocation(library[2]);
+        l.setDescription(library[3]);
+        libraries.put(l.getLibraryID(), l);
     }
 
 
