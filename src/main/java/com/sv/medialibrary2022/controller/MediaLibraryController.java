@@ -84,7 +84,8 @@ public class MediaLibraryController {
                             Media deletedItem = dao.removeMedia(id);
                             view.displaySuccessBanner("deleted", deletedItem.getFormat(), deletedItem.getTitle());
                         } else {
-                            view.print("LIBRARY NOT DELETED");
+                            Library deletedLibrary = dao.removeLibrary(id);
+                            view.displaySuccessBanner("deleted", "library", deletedLibrary.getName());
                         }
                     }
                     break;

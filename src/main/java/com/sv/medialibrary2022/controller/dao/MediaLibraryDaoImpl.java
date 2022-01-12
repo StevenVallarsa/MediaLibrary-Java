@@ -156,7 +156,14 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
 
     @Override
     public Library removeLibrary(String libraryID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Media> mediaList = getAllMedia();
+        for (Media m : mediaList) {
+            if (m.getLibrary().equals(libraryID)) {
+                m.setLibrary("00");
+                media.put(m.getMediaID(), m);
+            }
+        }
+        return libraries.remove(libraryID);
     }
 
     @Override
