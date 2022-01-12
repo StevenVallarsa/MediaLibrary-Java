@@ -18,7 +18,11 @@ import javax.management.Descriptor;
  */
 public class MediaLibraryView {
     
-    private UserIO io = new UserIOImpl();
+    private UserIO io;
+    
+    public MediaLibraryView(UserIO io) {
+        this.io = io;
+    }
     
     public void print(String prompt) {
         io.print(prompt);

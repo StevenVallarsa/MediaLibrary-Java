@@ -20,8 +20,13 @@ import java.util.List;
  */
 public class MediaLibraryController {
     
-    private MediaLibraryView view = new MediaLibraryView();
-    private MediaLibraryDao dao = new MediaLibraryDaoImpl();
+    private MediaLibraryView view;
+    private MediaLibraryDao dao;
+    
+    public MediaLibraryController(MediaLibraryDao dao, MediaLibraryView view) {
+        this.dao = dao;
+        this.view = view;
+    }
     
     public void run() {
         boolean isRunning = true;

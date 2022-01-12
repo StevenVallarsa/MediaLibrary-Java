@@ -2,6 +2,9 @@
 package com.sv.medialibrary2022;
 
 import com.sv.medialibrary2022.controller.MediaLibraryController;
+import com.sv.medialibrary2022.controller.dao.MediaLibraryDao;
+import com.sv.medialibrary2022.controller.dao.MediaLibraryDaoImpl;
+import com.sv.medialibrary2022.ui.MediaLibraryView;
 import com.sv.medialibrary2022.ui.UserIO;
 import com.sv.medialibrary2022.ui.UserIOImpl;
 
@@ -15,8 +18,11 @@ import com.sv.medialibrary2022.ui.UserIOImpl;
  */
 public class App {
     public static void main(String[] args) {
+        UserIO myIO = new UserIOImpl();
+        MediaLibraryView myView = new MediaLibraryView(myIO);
+        MediaLibraryDao myDao = new MediaLibraryDaoImpl();
+        MediaLibraryController controller = new MediaLibraryController(myDao, myView);
         
-        MediaLibraryController controller = new MediaLibraryController();
         controller.run();
     }
 }
