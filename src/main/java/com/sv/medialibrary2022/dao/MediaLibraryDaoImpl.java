@@ -28,6 +28,7 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     
     private int mediaIndex = 100;
     private int libraryIndex = 10;
+    private int index = 0;
     
     public static final String LIBRARY_FILE = "library.txt";
     public static final String MEDIA_FILE = "media.txt";
@@ -201,9 +202,9 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
 
     private Library unmarshallLibrary(String libraryAsText) {
         String[] libraryTokens = libraryAsText.split(DELIMITER);
-        String libraryID = libraryTokens[0];
+        libraryIndex = index;
         
-        Library libraryFromFile = new Library(libraryID);
+        Library libraryFromFile = new Library(libraryTokens[0]);
         libraryFromFile.setName(libraryTokens[1]);
         libraryFromFile.setLocation(libraryTokens[2]);
         libraryFromFile.setDescription(libraryTokens[3]);
@@ -213,6 +214,7 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     
     private Media unmarshallMedia(String mediaAsText) {
         String[] mediaTokens = mediaAsText.split(DELIMITER);
+        mediaIndex = index;
         
         Media mediaFromFile = new Media(mediaTokens[0]);
         mediaFromFile.setTitle(mediaTokens[1]);
@@ -235,7 +237,7 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
             throw new MediaLibraryDaoException("Could not load library into memory.", e);
         }
         
-        libraryIndex = Integer.parseInt(scanner.nextLine());
+        index = Integer.parseInt(scanner.nextLine());
         
         String currentLine;
         Library currentLibrary;
