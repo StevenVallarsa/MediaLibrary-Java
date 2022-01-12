@@ -28,7 +28,7 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     // Creates default library at runtime
     public MediaLibraryDaoImpl() {
         setDefaultLibrary();
-        setStubMedia();
+        setDefaultMedia();
     }
     
     private void setDefaultLibrary() {
@@ -44,7 +44,7 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         
     }
     
-    private void setStubMedia() {
+    private void setDefaultMedia() {
         
         Media m1 = new Media(String.valueOf(mediaIndex++));
         m1.setTitle("2001: A Space Odyssey");
@@ -160,8 +160,13 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
 
     @Override
-    public Media moveMediaItem(String mediaID, String libraryID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Media modifyMedia(Media media) {
+        return null;
+    }
+    
+    @Override
+    public Library modifyLibrary(Library library) {
+        return null;
     }
 
 

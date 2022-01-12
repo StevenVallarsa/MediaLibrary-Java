@@ -82,12 +82,17 @@ public interface MediaLibraryDao {
     /**
      * Move the Media object of mediaID to Library object of libraryID
      * 
-     * @param mediaID ID of selected Media object to move
-     * @param libraryID ID of the Library the Media object is being moved to
-     * @return Media object (with Library ID) if move is successful, and
-     * null if either the Media or Library don't exist
+     * @param modified Media object to be updated
+     * @return Media object (with Library ID)
      */
-    Media moveMediaItem(String mediaID, String libraryID);
+    Media modifyMedia(Media media);
+    
+    /**
+     * 
+     * @param movided Library object to be updated
+     * @return Library object 
+     */
+    Library modifyLibrary(Library library);
     
     
 

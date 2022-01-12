@@ -31,27 +31,42 @@ public class MediaLibraryController {
             menuSelection = getMenuSelection();
             
             switch(menuSelection) {
+                
+                // LIST MEDIA BY LIBRARIES
                 case 1:
-                    // LIST MEDIA BY LIBRARIES
-                    List<Library> libraries = getLibraryList();
-                    List<Media> media = getMediaList();
-                    view.displayLibrariesAndMedia(libraries, media);
+                    view.displayLibrariesAndMedia(getLibraryList(), getMediaList());
                     break;
+                    
+                // CREATE NEW MEDIA ITEM
                 case 2:
-                    // CREATE NEW MEDIA ITEM
                     Media newMedia = view.getNewMediaInfo();
                     dao.addMedia(newMedia);
                     view.displaySuccessBanner("created", newMedia.getFormat(), newMedia.getTitle());
                     break;
+                    
+                // SEARCH MEDIA
                 case 3:
-                    // SEARCH MEDIA
-                    List<Media> results = dao.findMedia(view.getSearchTerm());
+                    String search = view.getSearchTerm();
+                    List<Media> results = dao.findMedia(search);
                     view.displaySearchResults(results);
+                    break;
+                    
+                // MODIFY MEDIA
+                case 4:
+                    List<Media> media = getMediaList();
+                    List<Library> libraries = getLibraryList();
+                    view.displayLibrariesAndMedia(libraries, media);
+                    String[] revisedItem = view.modifyMediaOrLibrary(libraries, media);
+                    if (revisedItem != null) {
+                        if (revisedItem.length == 4) {
+                            
+                        }
+                    }
+                    
                     
                     break;
-                case 4:
-                    view.print("Move Media Item");
-                    break;
+                    
+                // REMOVE MEDIA    
                 case 5:
                     view.print("Remove Media");
                     break;
