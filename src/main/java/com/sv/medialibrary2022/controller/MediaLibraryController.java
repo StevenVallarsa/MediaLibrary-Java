@@ -1,8 +1,8 @@
 
 package com.sv.medialibrary2022.controller;
 
-import com.sv.medialibrary2022.controller.dao.MediaLibraryDao;
-import com.sv.medialibrary2022.controller.dao.MediaLibraryDaoImpl;
+import com.sv.medialibrary2022.dao.MediaLibraryDao;
+import com.sv.medialibrary2022.dao.MediaLibraryDaoImpl;
 import com.sv.medialibrary2022.dto.Library;
 import com.sv.medialibrary2022.dto.Media;
 import com.sv.medialibrary2022.ui.MediaLibraryView;
@@ -118,7 +118,7 @@ public class MediaLibraryController {
                     view.print("UNKNOWN COMMAND");
             }
         }
-        view.print("\nGOOD BYE!");
+        view.print("\nGOODBYE!");
     }
 
     private int getMenuSelection() {

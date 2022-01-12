@@ -2,8 +2,8 @@
 package com.sv.medialibrary2022;
 
 import com.sv.medialibrary2022.controller.MediaLibraryController;
-import com.sv.medialibrary2022.controller.dao.MediaLibraryDao;
-import com.sv.medialibrary2022.controller.dao.MediaLibraryDaoImpl;
+import com.sv.medialibrary2022.dao.MediaLibraryDao;
+import com.sv.medialibrary2022.dao.MediaLibraryDaoImpl;
 import com.sv.medialibrary2022.ui.MediaLibraryView;
 import com.sv.medialibrary2022.ui.UserIO;
 import com.sv.medialibrary2022.ui.UserIOImpl;

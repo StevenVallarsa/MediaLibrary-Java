@@ -1,5 +1,5 @@
 
-package com.sv.medialibrary2022.controller.dao;
+package com.sv.medialibrary2022.dao;
 
 import com.sv.medialibrary2022.dto.Library;
 import com.sv.medialibrary2022.dto.Media;
