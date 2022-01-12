@@ -109,7 +109,7 @@ public class MediaLibraryView {
     
     public void displayMediaItem(List<Library> libraries, List<Media> media) {
         String id = getIdNumber(true);
-        if (id.isBlank()) {
+        if (id == null || id.isBlank()) {
             // Nothing to see here. Move along. Move along.
         } else if (id.length() == 3) {
             for (Media m : media) {
@@ -142,7 +142,6 @@ public class MediaLibraryView {
         io.print("-+-+-+-+-+-+-+-+-+-+");
         io.printMedia("%s : %s : %-30s : %-20s : %s%n",new String[] {"ID", "LIB", "TITLE", "CREATOR", "FORMAT"});
 
-
         for (Media m : searchResults) {
             String id = m.getMediaID();
             String title = m.getTitle();
@@ -158,7 +157,6 @@ public class MediaLibraryView {
             }
 
             io.printMedia("%s : %s : %-30s : %-20s : %s%n",new String[] {id, lib, title, creator, format});
-
         }
     }
 
@@ -280,6 +278,9 @@ public class MediaLibraryView {
         if (input.isBlank()) return null;
         try {
             int testForInt = Integer.parseInt(input);
+            if (mediaSearch && input.length() == 2) {
+                throw new Exception("Only media IDs are accepted for this operation");
+            }
             if (input.length() < 2 || input.length() > 3) {
                 throw new Exception("That's not a valid ID number");
             }

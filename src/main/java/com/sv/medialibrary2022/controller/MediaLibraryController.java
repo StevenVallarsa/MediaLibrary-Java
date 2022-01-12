@@ -57,6 +57,7 @@ public class MediaLibraryController {
                     
                 // GET MEDIA DETAILS
                 case 4:
+                    view.displayLibrariesAndMedia(libraries, media);
                     view.displayMediaItem(libraries, media);
                     break;
                     
