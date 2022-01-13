@@ -1,4 +1,2 @@
-14
+10
 00::Default Library::Book Return Cart::The default location for new books
-10::Visual Media Shelf::By TV::blah
-11::Desk Shelves::blah::In the bedroom

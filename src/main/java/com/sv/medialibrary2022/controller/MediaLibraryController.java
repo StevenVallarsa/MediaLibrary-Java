@@ -130,7 +130,7 @@ public class MediaLibraryController {
         return dao.getAllLibraries();
     }
 
-    private List<Media> getMediaList() {
+    private List<Media> getMediaList() throws MediaLibraryDaoException {
         return dao.getAllMedia();
     }
     

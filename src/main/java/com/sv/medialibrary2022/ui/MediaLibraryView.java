@@ -105,6 +105,9 @@ public class MediaLibraryView {
     }
     
     public void displayLibraries(List<Library> libraries) {
+        io.print("\n-+-+-+-+-");
+        io.print("LIBRARIES");
+        io.print("-+-+-+-+-");
         io.printMedia(" %s: %-20s : %-20s : %s%n", new String[] {"#", "NAME", "LOCATION", "DESCRIPTION"});
         for (Library library : libraries) {
             io.printMedia("%s: %-20s : %-20s : %s%n", new String[] {library.getLibraryID(), library.getName(), library.getLocation(), library.getDescription() });

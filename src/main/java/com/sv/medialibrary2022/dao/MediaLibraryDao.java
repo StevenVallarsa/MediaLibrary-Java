@@ -16,7 +16,7 @@ public interface MediaLibraryDao {
      * 
      * @return List containing all Media in all the Libraries
      */
-    List<Media> getAllMedia();
+    List<Media> getAllMedia() throws MediaLibraryDaoException;
     
     /**
      * Return a List of all Library objects
@@ -33,7 +33,7 @@ public interface MediaLibraryDao {
      * @param mediaItem to be added to the collection
      * @return the media object if duplicate, or null if unique
      */
-    Media addMedia(Media mediaItem);
+    Media addMedia(Media mediaItem) throws MediaLibraryDaoException;
     
     /**
      * Add the given media to the collection and associate it with its ID.
@@ -51,7 +51,7 @@ public interface MediaLibraryDao {
      * @param mediaID ID of the media item to be retrieved
      * @return Media object of the given mediaID, or null if no such ID exists
      */
-    List<Media> findMedia(String searchTerm);
+    List<Media> findMedia(String searchTerm) throws MediaLibraryDaoException;
     
     /**
      * Returns a Library object with the given ID
@@ -77,7 +77,7 @@ public interface MediaLibraryDao {
      * @param libraryID ID of the Library to be removed
      * @return Library object that was removed, or null if ID doesn't exist
      */
-    Library removeLibrary(String libraryID);
+    Library removeLibrary(String libraryID) throws MediaLibraryDaoException;
     
     /**
      * Move the Media object of mediaID to Library object of libraryID
