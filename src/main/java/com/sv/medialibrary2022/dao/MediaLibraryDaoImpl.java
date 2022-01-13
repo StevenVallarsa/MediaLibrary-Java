@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import org.w3c.dom.stylesheets.MediaList;
 
 
 /**
@@ -120,7 +119,6 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     public List<Library> getAllLibraries() throws MediaLibraryDaoException {
         loadLibrary();
         return new ArrayList<Library>(libraries.values());
-        
     }
 
     @Override
@@ -133,21 +131,21 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
 
     @Override
-    public Library addLibrary(Library libraryItem) {
+    public Library addLibrary(Library libraryItem) throws MediaLibraryDaoException {
+        loadLibrary();
         libraryItem.setLibraryID(String.valueOf(libraryIndex++));
         Library prevLibrary = libraries.put(libraryItem.getLibraryID(), libraryItem);
+        writeLibrary();
         return prevLibrary;
     }
 
     @Override
     public List<Media> findMedia(String searchTerm) throws MediaLibraryDaoException {
+        loadMedia();
         List<Media> media = getAllMedia();
         List<Media> results = new ArrayList<>();
         searchTerm = searchTerm.toLowerCase();
         for (Media m : media) {
-            String title = m.getTitle().toLowerCase();
-            System.out.println(m.getTitle().toLowerCase());
-            System.out.println(searchTerm);
             if (m.getMediaID().contains(searchTerm) ||
                     m.getTitle().toLowerCase().contains(searchTerm) ||
                     m.getDescription().toLowerCase().contains(searchTerm) ||
@@ -163,17 +161,23 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
 
     @Override
-    public Library getLibrary(String libraryID) {
+    public Library getLibrary(String libraryID) throws MediaLibraryDaoException{
+        loadLibrary();
         return libraries.get(libraryID);
     }
 
     @Override
-    public Media removeMedia(String mediaID) {
-        return media.remove(mediaID);
+    public Media removeMedia(String mediaID) throws MediaLibraryDaoException {
+        loadMedia();
+        Media removedMedia = media.remove(mediaID);
+        writeMedia();
+        return removedMedia;
     }
 
     @Override
     public Library removeLibrary(String libraryID) throws MediaLibraryDaoException {
+        loadLibrary();
+        loadMedia();
         List<Media> mediaList = getAllMedia();
         for (Media m : mediaList) {
             if (m.getLibrary().equals(libraryID)) {
@@ -181,11 +185,15 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
                 media.put(m.getMediaID(), m);
             }
         }
-        return libraries.remove(libraryID);
+        Library removedLibrary = libraries.remove(libraryID);
+        writeMedia();
+        writeLibrary();
+        return removedLibrary;
     }
 
     @Override
-    public void modifyMedia(String[] mediaArray) {
+    public void modifyMedia(String[] mediaArray) throws MediaLibraryDaoException {
+        loadMedia();
         Media m = new Media(mediaArray[0]);
         m.setTitle(mediaArray[1]);
         m.setCreator(mediaArray[2]);
@@ -195,15 +203,18 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         m.setFormat(mediaArray[6]);
         m.setLibrary(mediaArray[7]);
         media.put(m.getMediaID(), m);
+        writeMedia();
     }
     
     @Override
-    public void modifyLibrary(String[] library) {
+    public void modifyLibrary(String[] library) throws MediaLibraryDaoException {
+        loadLibrary();
         Library l = new Library(library[0]);
         l.setName(library[1]);
         l.setLocation(library[2]);
         l.setDescription(library[3]);
         libraries.put(l.getLibraryID(), l);
+        writeLibrary();
     }
     
     
@@ -250,12 +261,10 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         
         libraryIndex = Integer.parseInt(scanner.nextLine());
         
-        String currentLine;
         Library currentLibrary;
         
         while (scanner.hasNextLine()) {
-            currentLine = scanner.nextLine();
-            currentLibrary = unmarshallLibrary(currentLine);
+            currentLibrary = unmarshallLibrary(scanner.nextLine());
             libraries.put(currentLibrary.getLibraryID(), currentLibrary);
         }
         scanner.close();
@@ -303,6 +312,8 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         return mediaAsText;
     }
     
+    
+    
     private void writeLibrary() throws MediaLibraryDaoException {
         
         PrintWriter out;
@@ -313,9 +324,10 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
             throw new MediaLibraryDaoException("Could not save library data.", e);
         }
         
+        out.println(String.valueOf(libraryIndex));
         String libraryAsText;
-        List<Library> libraryList = this.getAllLibraries();
-        for (Library library : libraryList) {
+//        List<Library> libraryList = this.getAllLibraries();
+        for (Library library : libraries.values()) {
             libraryAsText = marshallLibrary(library);
             out.println(libraryAsText);
             out.flush();

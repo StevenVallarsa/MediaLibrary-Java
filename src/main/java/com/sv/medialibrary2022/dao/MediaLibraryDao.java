@@ -43,7 +43,7 @@ public interface MediaLibraryDao {
      * @param libraryItem to be added to the list of libraries
      * @return the library object if duplicate, or null if unique
      */
-    Library addLibrary(Library libraryItem);
+    Library addLibrary(Library libraryItem) throws MediaLibraryDaoException;
     
     /**
      * Returns a Media object with the given ID
@@ -59,7 +59,7 @@ public interface MediaLibraryDao {
      * @param libraryID ID of the Library item to be retrieved
      * @return Library object of the given libraryID, or null if no such ID exists
      */
-    Library getLibrary (String libraryID);
+    Library getLibrary (String libraryID) throws MediaLibraryDaoException;
     
     /**
      * Removes Media object with the given ID
@@ -67,7 +67,7 @@ public interface MediaLibraryDao {
      * @param mediaID ID of the Media item to be removed
      * @return Media item that was removed, or null if ID doesn't exist
      */
-    Media removeMedia(String mediaID);
+    Media removeMedia(String mediaID) throws MediaLibraryDaoException;
     
     /**
      * Removes Library object with the given ID. Will iterate through all the
@@ -85,14 +85,14 @@ public interface MediaLibraryDao {
      * @param media String array of the items to modify an existing Media object
      * @return Media object (with Library ID)
      */
-    void modifyMedia(String[] media);
+    void modifyMedia(String[] media) throws MediaLibraryDaoException;
     
     /**
      * 
      * @param library String array of the items to modify an existing Library object
      * @return Library object 
      */
-    void modifyLibrary(String[] library);
+    void modifyLibrary(String[] library) throws MediaLibraryDaoException;
     
     
 
