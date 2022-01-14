@@ -67,7 +67,7 @@ public class MediaLibraryController {
                     view.displayMediaItem(libraries, media);
                     break;
                     
-                // MODIFY MEDIA
+                // MODIFY MEDIA AND LIBRARIES
                 case 5:
                     view.displayLibrariesAndMedia(libraries, media);
                     String[] revisedItem = view.modifyMediaOrLibrary(libraries, media);

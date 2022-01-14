@@ -23,7 +23,6 @@ public class ServiceLayerImpl implements ServiceLayer {
     public ServiceLayerImpl(MediaLibraryDao dao) {
         this.dao = dao;
     }
-    
 
     @Override
     public boolean checkForDuplicates(List<Media> media, Media item) {
@@ -44,37 +43,44 @@ public class ServiceLayerImpl implements ServiceLayer {
 
     @Override
     public List<Media> findMedia(String search) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        dao.findMedia(search);
     }
 
     @Override
-    public void modifyLibrary(String[] libraryArray) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void modifyLibrary(String[] libraryArray) throws MediaLibraryPersistenceException, MediaLibraryValidationException {
+        
+        if (libraryArray[1].isBlank() || libraryArray[2].isBlank()) {
+            throw new MediaLibraryValidationException("ERROR: The NAME and LOCATION fields must be filled out.");
+        }
     }
 
     @Override
-    public void modifyMedia(String[] mediaArray) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void modifyMedia(String[] mediaArray) throws MediaLibraryPersistenceException, MediaLibraryValidationException {
+        
+        if (mediaArray[1].isBlank() || mediaArray[6].isBlank()) {
+            throw new MediaLibraryValidationException("ERROR: The TITLE and FORMAT fields must be filled out.");
+        }
+        dao.modifyMedia(mediaArray);
     }
 
     @Override
     public Media removeMedia(String id) throws MediaLibraryPersistenceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return dao.removeMedia(id);
     }
 
     @Override
-    public Library removeLibrary(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Library removeLibrary(String id) throws MediaLibraryPersistenceException {
+        return dao.removeLibrary(id);
     }
 
     @Override
-    public List<Library> getAllLibraries() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Library> getAllLibraries() throws MediaLibraryPersistenceException {
+        return dao.getAllLibraries();
     }
 
     @Override
-    public List<Media> getAllMedia() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Media> getAllMedia() throws MediaLibraryPersistenceException {
+        return dao.getAllMedia();
     }
     
     private void validateMediaData(Media media) throws MediaLibraryValidationException {
