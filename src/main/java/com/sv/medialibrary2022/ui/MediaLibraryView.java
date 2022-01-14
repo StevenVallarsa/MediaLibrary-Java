@@ -69,13 +69,13 @@ public class MediaLibraryView {
 
         Library newLibrary = new Library();
         newLibrary.setName(io.readString("New library name"));
-        newLibrary.setDescription(io.readString("Description"));
         newLibrary.setLocation(io.readString("Location"));
+        newLibrary.setDescription(io.readString("Description"));
         return newLibrary;
     }
 
     public void displaySuccessBanner(String action, String format, String title) {
-        io.print("You successfully " + action + " a " + format + " with the name of \"" + title + "\".");
+        io.print("You successfully " + action + " a " + format + " named \"" + title + "\".");
     }
 
     public void displayLibrariesAndMedia(List<Library> libraries, List<Media> media) {

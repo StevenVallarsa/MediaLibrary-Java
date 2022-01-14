@@ -1,3 +1,4 @@
-104
+106
 102::3001::Arthur C Clarke::good conclusion to the 2001 saga::1999::sci-fi::hard cover::00
 103::2010::Arthur C Clarke::the second odyssey::1982::sci-fi::paperback::00
+105::Dune::Frank Herbert::sweeping saga of the most precious substance in the universe::1965::Sci-Fi::paperback::00

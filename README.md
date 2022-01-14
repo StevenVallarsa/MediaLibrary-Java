@@ -39,7 +39,12 @@ com.sv.MediaLibrary.dto
 - add custom Exception class to encapsulate errors
 - add persistance via text files
 - add marshalling and unmarshalling to read and write to text files
-
+- add service layer
+  - error for missing title or format
+  - add default values to empty input
+  - alert user to a duplicate title and format for an item
+  - standardize genre to FICTION, NON-FICTION, SCI-FI, FANTASY, COMEDY ACTION, THRILLER, HORROR, MANUAL, RELIGION, GRAPHICS, SOFTWARE DEVELOPMENT, TRAVEL, SELF-HELP - (modifyable by user in future iteration)
+  - standardize format to PAPERBACK, TRADE PAPERBACK, KID BOOK, HARD COVER, VINYL, TAPE, CD, DVD, BLURAY
 
 ### 3 - Third Iteration will add Unit Testing ("3 unit testing" branch)
 

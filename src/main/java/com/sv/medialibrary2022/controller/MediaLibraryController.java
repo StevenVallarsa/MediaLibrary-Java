@@ -101,6 +101,7 @@ public class MediaLibraryController {
                         }
                     }
                     break;
+                    
                 case 7:
                     // CREATE NEW LIBRARY
                     Library newLibrary = view.createNewLibrary();
