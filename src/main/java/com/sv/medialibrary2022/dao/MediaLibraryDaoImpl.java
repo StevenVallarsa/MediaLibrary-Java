@@ -39,7 +39,7 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     
     
     // Load libraries at runtime
-    public MediaLibraryDaoImpl() throws MediaLibraryDaoException {
+    public MediaLibraryDaoImpl() throws MediaLibraryPersistenceException {
         loadLibrary();
         loadMedia();
     }
@@ -114,17 +114,17 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
 */
 
     @Override
-    public List<Media> getAllMedia() throws MediaLibraryDaoException {
+    public List<Media> getAllMedia() throws MediaLibraryPersistenceException {
         return new ArrayList<Media>(media.values());
     }
 
     @Override
-    public List<Library> getAllLibraries() throws MediaLibraryDaoException {
+    public List<Library> getAllLibraries() throws MediaLibraryPersistenceException {
         return new ArrayList<Library>(libraries.values());
     }
 
     @Override
-    public Media addMedia(Media mediaItem) throws MediaLibraryDaoException {
+    public Media addMedia(Media mediaItem) throws MediaLibraryPersistenceException {
         mediaItem.setMediaID(String.valueOf(mediaIndex++));
         Media prevMedia = media.put(mediaItem.getMediaID(), mediaItem);
         writeMedia();
@@ -132,7 +132,7 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
 
     @Override
-    public Library addLibrary(Library libraryItem) throws MediaLibraryDaoException {
+    public Library addLibrary(Library libraryItem) throws MediaLibraryPersistenceException {
         libraryItem.setLibraryID(String.valueOf(libraryIndex++));
         if (libraryItem.getDescription().isEmpty()) {
             libraryItem.setDescription(" ");
@@ -143,7 +143,7 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
 
     @Override
-    public List<Media> findMedia(String searchTerm) throws MediaLibraryDaoException {
+    public List<Media> findMedia(String searchTerm) throws MediaLibraryPersistenceException {
         List<Media> media = getAllMedia();
         List<Media> results = new ArrayList<>();
         searchTerm = searchTerm.toLowerCase();
@@ -163,19 +163,19 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
 
     @Override
-    public Library getLibrary(String libraryID) throws MediaLibraryDaoException{
+    public Library getLibrary(String libraryID) throws MediaLibraryPersistenceException{
         return libraries.get(libraryID);
     }
 
     @Override
-    public Media removeMedia(String mediaID) throws MediaLibraryDaoException {
+    public Media removeMedia(String mediaID) throws MediaLibraryPersistenceException {
         Media removedMedia = media.remove(mediaID);
         writeMedia();
         return removedMedia;
     }
 
     @Override
-    public Library removeLibrary(String libraryID) throws MediaLibraryDaoException {
+    public Library removeLibrary(String libraryID) throws MediaLibraryPersistenceException {
         List<Media> mediaList = getAllMedia();
         for (Media m : mediaList) {
             if (m.getLibrary().equals(libraryID)) {
@@ -190,7 +190,7 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
 
     @Override
-    public void modifyMedia(String[] mediaArray) throws MediaLibraryDaoException {
+    public void modifyMedia(String[] mediaArray) throws MediaLibraryPersistenceException {
         Media m = new Media(mediaArray[0]);
         m.setTitle(mediaArray[1]);
         m.setCreator(mediaArray[2]);
@@ -204,7 +204,7 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
     
     @Override
-    public void modifyLibrary(String[] library) throws MediaLibraryDaoException {
+    public void modifyLibrary(String[] library) throws MediaLibraryPersistenceException {
         if (library[3].isEmpty()) {
             library[3] = " ";
         }
@@ -249,13 +249,13 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     
     
     
-    private void loadLibrary() throws MediaLibraryDaoException {
+    private void loadLibrary() throws MediaLibraryPersistenceException {
         Scanner scanner;
         
         try {
             scanner = new Scanner(new BufferedReader(new FileReader(LIBRARY_FILE)));
         } catch (FileNotFoundException e) {
-            throw new MediaLibraryDaoException("Could not load library into memory.", e);
+            throw new MediaLibraryPersistenceException("Could not load library into memory.", e);
         }
         
         libraryIndex = Integer.parseInt(scanner.nextLine());
@@ -269,13 +269,13 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         scanner.close();
     }
     
-    private void loadMedia() throws MediaLibraryDaoException {
+    private void loadMedia() throws MediaLibraryPersistenceException {
         Scanner scanner;
         
         try {
             scanner = new Scanner(new BufferedReader(new FileReader(MEDIA_FILE)));
         } catch (IOException e) {
-            throw new MediaLibraryDaoException("Cound not load media data into memory", e);
+            throw new MediaLibraryPersistenceException("Cound not load media data into memory", e);
         }
         
         Media currentMedia;
@@ -313,14 +313,14 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     
     
     
-    private void writeLibrary() throws MediaLibraryDaoException {
+    private void writeLibrary() throws MediaLibraryPersistenceException {
         
         PrintWriter out;
         
         try {
             out = new PrintWriter(new FileWriter(LIBRARY_FILE));
         } catch (IOException e) {
-            throw new MediaLibraryDaoException("Could not save library data.", e);
+            throw new MediaLibraryPersistenceException("Could not save library data.", e);
         }
         
         out.println(String.valueOf(libraryIndex));
@@ -333,14 +333,14 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         out.close();
     }
     
-    private void writeMedia() throws MediaLibraryDaoException {
+    private void writeMedia() throws MediaLibraryPersistenceException {
         
         PrintWriter out;
         
         try {
             out = new PrintWriter(new FileWriter(MEDIA_FILE));
         } catch (IOException e) {
-            throw new MediaLibraryDaoException("Could not save media data.", e);
+            throw new MediaLibraryPersistenceException("Could not save media data.", e);
         }
         out.println(String.valueOf(mediaIndex));
         String mediaAsText;

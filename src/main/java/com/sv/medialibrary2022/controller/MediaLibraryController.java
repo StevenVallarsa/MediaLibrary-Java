@@ -2,7 +2,7 @@
 package com.sv.medialibrary2022.controller;
 
 import com.sv.medialibrary2022.dao.MediaLibraryDao;
-import com.sv.medialibrary2022.dao.MediaLibraryDaoException;
+import com.sv.medialibrary2022.dao.MediaLibraryPersistenceException;
 import com.sv.medialibrary2022.dao.MediaLibraryDaoImpl;
 import com.sv.medialibrary2022.dto.Library;
 import com.sv.medialibrary2022.dto.Media;
@@ -29,7 +29,7 @@ public class MediaLibraryController {
         this.view = view;
     }
     
-    public void run() throws MediaLibraryDaoException {
+    public void run() throws MediaLibraryPersistenceException {
         boolean isRunning = true;
         int menuSelection = 0;
         
@@ -90,14 +90,14 @@ public class MediaLibraryController {
                 // REMOVE MEDIA OR LIBRARY   
                 case 6:
                     view.displayLibrariesAndMedia(libraries, media);
-                    String id = view.deleteMediaOrLibrary(libraries, media);
+                    String id = view.removeMediaOrLibrary(libraries, media);
                     if (id != null) {
                         if (id.length() == 3) {
-                            Media deletedItem = dao.removeMedia(id);
-                            view.displaySuccessBanner("removed", deletedItem.getFormat(), deletedItem.getTitle());
+                            Media removedItem = dao.removeMedia(id);
+                            view.displaySuccessBanner("removed", removedItem.getFormat(), removedItem.getTitle());
                         } else {
-                            Library deletedLibrary = dao.removeLibrary(id);
-                            view.displaySuccessBanner("removed", "library", deletedLibrary.getName());
+                            Library removedLibrary = dao.removeLibrary(id);
+                            view.displaySuccessBanner("removed", "library", removedLibrary.getName());
                         }
                     }
                     break;
@@ -106,7 +106,7 @@ public class MediaLibraryController {
                     // CREATE NEW LIBRARY
                     Library newLibrary = view.createNewLibrary();
                     dao.addLibrary(newLibrary);
-                    view.print("You successfully created a new library named \"" + newLibrary.getName() + "\"");
+                    view.displaySuccessBanner("created", "library", newLibrary.getName());
                     break;
                 
                 // LIST LIBRARIES
@@ -127,11 +127,11 @@ public class MediaLibraryController {
         return view.printMenuAndGetSelection();
     }
     
-    private List<Library> getLibraryList() throws MediaLibraryDaoException {
+    private List<Library> getLibraryList() throws MediaLibraryPersistenceException {
         return dao.getAllLibraries();
     }
 
-    private List<Media> getMediaList() throws MediaLibraryDaoException {
+    private List<Media> getMediaList() throws MediaLibraryPersistenceException {
         return dao.getAllMedia();
     }
     

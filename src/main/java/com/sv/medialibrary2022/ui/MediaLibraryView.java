@@ -258,7 +258,7 @@ public class MediaLibraryView {
         return null;
     }
     
-    public String deleteMediaOrLibrary(List<Library> libraries, List<Media> media) {
+    public String removeMediaOrLibrary(List<Library> libraries, List<Media> media) {
         io.print("\n-+-+-+-+-+-+-+-+-+-+-+-");
         io.print("REMOVE MEDIA OR LIBRARY");
         io.print("-+-+-+-+-+-+-+-+-+-+-+-");

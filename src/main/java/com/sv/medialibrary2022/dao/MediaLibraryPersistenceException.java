@@ -12,13 +12,13 @@ package com.sv.medialibrary2022.dao;
  *    date: 2022-00-00
  * purpose: 
  */
-public class MediaLibraryDaoException extends Exception {
+public class MediaLibraryPersistenceException extends Exception {
     
-    public MediaLibraryDaoException(String message) {
+    public MediaLibraryPersistenceException(String message) {
         super(message);
     }
     
-    public MediaLibraryDaoException(String message, Throwable cause) {
+    public MediaLibraryPersistenceException(String message, Throwable cause) {
         super(message, cause);
     }
 

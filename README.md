@@ -2,7 +2,7 @@
 - A mid-complexity media library app to keep track of books, tapes, CDs, DVDs, etc...
 - It will start as a console app and new functionality with each iteration until it becomes a Java web app
 
-### 1 - First Iteration will use a text file to store media objects ("main" branch)
+### 1 - First Iteration will use a text file to store media objects -- BRANCH main
 - Create a simple console app that will keep track of your media items with two entities: __media__ and __libraries__ and the following classes / interfaces
 - MVC Pattern:
 ---
@@ -34,27 +34,31 @@ com.sv.MediaLibrary.dto
   - _UserIO.java (interface)_
   - UserIOConsoleImpl.java
 
-### 2 - Second Iteration will add a Service Layer ("2 service layer" branch)
+### 2 - Second Iteration will add a Service Layer -- BRANCH 2-service_layer
 - add dependency injection
 - add custom Exception class to encapsulate errors
+  - MediaLibraryValidationException
+    - if the "title" or "format" aren't filled out for the media
+    - if the mediaIndex variable hits 999 and is now full
+    - if the libraryIndex variable hits 99 and is now full 
 - add persistance via text files
 - add marshalling and unmarshalling to read and write to text files
 - add service layer
   - error for missing title or format
   - add default values to empty input
   - alert user to a duplicate title and format for an item
-  - standardize genre to FICTION, NON-FICTION, SCI-FI, FANTASY, COMEDY ACTION, THRILLER, HORROR, MANUAL, RELIGION, GRAPHICS, SOFTWARE DEVELOPMENT, TRAVEL, SELF-HELP - (modifyable by user in future iteration)
-  - standardize format to PAPERBACK, TRADE PAPERBACK, KID BOOK, HARD COVER, VINYL, TAPE, CD, DVD, BLURAY
+  - record audit log for every transaction
 
-### 3 - Third Iteration will add Unit Testing ("3 unit testing" branch)
+### 3 - Third Iteration will add Unit Testing -- BRANCH 3-unit_testing
 
-### 4 - Fourth Iteration will add Lambdas and Streams ("4 lambda branch")
+### 4 - Fourth Iteration will add Lambdas and Streams -- BRANCH 4-lambda branch
 
-### 5 - Fifth Iteration will add Spring Boot for the dependency injection ("5 dependency injection" branch)
+### 5 - Fifth Iteration will add Spring Boot for the dependency injection -- BRANCH 5-dependency_injection"
 
-### 6 - Sixth Iteration will add a database to hold the library data ("6 database" branch)
+### 6 - Sixth Iteration will add a database to hold the library data -- BRANCH 6-database
 
-### 7 - Seventh Iteration will add REST web connectivity ("7 rest" branch)
+### 7 - Seventh Iteration will add REST web connectivity -- BRANCH 7-rest
 
-### 8 - Eighth Iteration will add ThymeLeaf to turn the Media Library into a full Java web application ("8 thymeleaf" branch)
+### 8 - Eighth Iteration will add ThymeLeaf to turn the Media Library into a full Java web application -- BRANCH 8-thymeleaf
+
 
