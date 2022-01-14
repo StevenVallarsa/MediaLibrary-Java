@@ -16,6 +16,10 @@ public interface ServiceLayer {
     List<Media> findMedia(String search);
     void modifyLibrary(String[] libraryArray);
     void modifyMedia(String[] mediaArray);
+    Media deleteMedia(String id);
+    Library deleteLibrary(String id);
+    List<Library> getAllLibraries();
+    List<Media> getAllMedia();
     
     
     
