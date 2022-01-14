@@ -5,6 +5,9 @@ import com.sv.medialibrary2022.controller.MediaLibraryController;
 import com.sv.medialibrary2022.dao.MediaLibraryDao;
 import com.sv.medialibrary2022.dao.MediaLibraryPersistenceException;
 import com.sv.medialibrary2022.dao.MediaLibraryDaoImpl;
+import com.sv.medialibrary2022.servicelayer.MediaLibraryValidationException;
+import com.sv.medialibrary2022.servicelayer.ServiceLayer;
+import com.sv.medialibrary2022.servicelayer.ServiceLayerImpl;
 import com.sv.medialibrary2022.ui.MediaLibraryView;
 import com.sv.medialibrary2022.ui.UserIO;
 import com.sv.medialibrary2022.ui.UserIOImpl;
@@ -18,11 +21,12 @@ import com.sv.medialibrary2022.ui.UserIOImpl;
  *          using CRUD MVC pattern
  */
 public class App {
-    public static void main(String[] args) throws MediaLibraryPersistenceException {
+    public static void main(String[] args) throws MediaLibraryPersistenceException, MediaLibraryValidationException {
         UserIO myIO = new UserIOImpl();
         MediaLibraryView myView = new MediaLibraryView(myIO);
-        MediaLibraryDao myDao = new MediaLibraryDaoImpl();
-        MediaLibraryController controller = new MediaLibraryController(myDao, myView);
+        MediaLibraryDao dao = new MediaLibraryDaoImpl();
+        ServiceLayer service = new ServiceLayerImpl(dao);
+        MediaLibraryController controller = new MediaLibraryController(service, myView);
         
         controller.run();
     }

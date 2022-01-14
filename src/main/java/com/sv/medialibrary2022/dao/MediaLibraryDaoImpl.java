@@ -114,12 +114,12 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
 */
 
     @Override
-    public List<Media> getAllMedia() throws MediaLibraryPersistenceException {
+    public List<Media> getAllMedia() {
         return new ArrayList<Media>(media.values());
     }
 
     @Override
-    public List<Library> getAllLibraries() throws MediaLibraryPersistenceException {
+    public List<Library> getAllLibraries() {
         return new ArrayList<Library>(libraries.values());
     }
 
@@ -143,7 +143,7 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
 
     @Override
-    public List<Media> findMedia(String searchTerm) throws MediaLibraryPersistenceException {
+    public List<Media> findMedia(String searchTerm) {
         List<Media> media = getAllMedia();
         List<Media> results = new ArrayList<>();
         searchTerm = searchTerm.toLowerCase();
@@ -163,7 +163,7 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
 
     @Override
-    public Library getLibrary(String libraryID) throws MediaLibraryPersistenceException{
+    public Library getLibrary(String libraryID) {
         return libraries.get(libraryID);
     }
 
@@ -190,28 +190,13 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     }
 
     @Override
-    public void modifyMedia(String[] mediaArray) throws MediaLibraryPersistenceException {
-        Media m = new Media(mediaArray[0]);
-        m.setTitle(mediaArray[1]);
-        m.setCreator(mediaArray[2]);
-        m.setDescription(mediaArray[3]);
-        m.setYear(mediaArray[4]);
-        m.setGenre(mediaArray[5]);
-        m.setFormat(mediaArray[6]);
-        m.setLibrary(mediaArray[7]);
+    public void modifyMedia(Media m) throws MediaLibraryPersistenceException {
         media.put(m.getMediaID(), m);
         writeMedia();
     }
     
     @Override
-    public void modifyLibrary(String[] library) throws MediaLibraryPersistenceException {
-        if (library[3].isEmpty()) {
-            library[3] = " ";
-        }
-        Library l = new Library(library[0]);
-        l.setName(library[1]);
-        l.setLocation(library[2]);
-        l.setDescription(library[3]);
+    public void modifyLibrary(Library l) throws MediaLibraryPersistenceException {
         libraries.put(l.getLibraryID(), l);
         writeLibrary();
     }

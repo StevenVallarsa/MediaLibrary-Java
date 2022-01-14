@@ -304,4 +304,15 @@ public class MediaLibraryView {
         }
         return input;
     }
+    
+    public void displayErrors(String error) {
+        io.print("\n=== ERROR ===");
+        io.print(error);
+    }
+    
+    public void displayDuplicateWarning(String name, String object) {
+        io.print("\n=== WARNING ===");
+        io.print("The " + object + " named " + name + " already exists.");
+        io.print("Please make sure it wasn't created or modified in error.\n");
+    }
 }

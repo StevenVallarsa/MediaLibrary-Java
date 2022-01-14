@@ -1,14 +1,12 @@
 
 package com.sv.medialibrary2022.controller;
 
-import com.sv.medialibrary2022.dao.MediaLibraryDao;
 import com.sv.medialibrary2022.dao.MediaLibraryPersistenceException;
-import com.sv.medialibrary2022.dao.MediaLibraryDaoImpl;
 import com.sv.medialibrary2022.dto.Library;
 import com.sv.medialibrary2022.dto.Media;
+import com.sv.medialibrary2022.servicelayer.MediaLibraryValidationException;
+import com.sv.medialibrary2022.servicelayer.ServiceLayer;
 import com.sv.medialibrary2022.ui.MediaLibraryView;
-import com.sv.medialibrary2022.ui.UserIO;
-import com.sv.medialibrary2022.ui.UserIOImpl;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,14 +20,14 @@ import java.util.List;
 public class MediaLibraryController {
     
     private MediaLibraryView view;
-    private MediaLibraryDao dao;
+    private ServiceLayer service;
     
-    public MediaLibraryController(MediaLibraryDao dao, MediaLibraryView view) {
-        this.dao = dao;
+    public MediaLibraryController(ServiceLayer service, MediaLibraryView view) {
+        this.service = service;
         this.view = view;
     }
     
-    public void run() throws MediaLibraryPersistenceException {
+    public void run() throws MediaLibraryPersistenceException, MediaLibraryValidationException {
         boolean isRunning = true;
         int menuSelection = 0;
         
@@ -50,14 +48,20 @@ public class MediaLibraryController {
                 // CREATE NEW MEDIA ITEM
                 case 2:
                     Media newMedia = view.createNewMedia();
-                    dao.addMedia(newMedia);
-                    view.displaySuccessBanner("created", newMedia.getFormat(), newMedia.getTitle());
+                    try {
+                        if (service.createMedia(newMedia)) {
+                            view.displayDuplicateWarning(newMedia.getTitle(), newMedia.getFormat());
+                        }
+                        view.displaySuccessBanner("created", newMedia.getFormat(), newMedia.getTitle());
+                    } catch (MediaLibraryValidationException | MediaLibraryPersistenceException e) {
+                        view.displayErrors(e.getMessage());
+                    }
                     break;
                     
                 // SEARCH MEDIA
                 case 3:
                     String search = view.getSearchTerm();
-                    List<Media> results = dao.findMedia(search);
+                    List<Media> results = service.findMedia(search);
                     view.displaySearchResults(results);
                     break;
                     
@@ -75,13 +79,17 @@ public class MediaLibraryController {
                     String title = "";
                     if (revisedItem != null) {
                         if (revisedItem.length == 4) {
-                            dao.modifyLibrary(revisedItem);
                             item = "library";
                             title = revisedItem[1];
+                            if (service.modifyLibrary(revisedItem)) {
+                                view.displayDuplicateWarning(title, item);
+                            }
                         } else {
-                            dao.modifyMedia(revisedItem);
                             item = revisedItem[6];
                             title = revisedItem[1];
+                            if(service.modifyMedia(revisedItem)) {
+                                view.displayDuplicateWarning(title, item);
+                            }
                         }
                         view.displaySuccessBanner("modified", item, title);
                     } 
@@ -93,10 +101,10 @@ public class MediaLibraryController {
                     String id = view.removeMediaOrLibrary(libraries, media);
                     if (id != null) {
                         if (id.length() == 3) {
-                            Media removedItem = dao.removeMedia(id);
+                            Media removedItem = service.removeMedia(id);
                             view.displaySuccessBanner("removed", removedItem.getFormat(), removedItem.getTitle());
                         } else {
-                            Library removedLibrary = dao.removeLibrary(id);
+                            Library removedLibrary = service.removeLibrary(id);
                             view.displaySuccessBanner("removed", "library", removedLibrary.getName());
                         }
                     }
@@ -105,8 +113,12 @@ public class MediaLibraryController {
                 case 7:
                     // CREATE NEW LIBRARY
                     Library newLibrary = view.createNewLibrary();
-                    dao.addLibrary(newLibrary);
-                    view.displaySuccessBanner("created", "library", newLibrary.getName());
+                    try {
+                        service.createLibrary(newLibrary);
+                        view.displaySuccessBanner("created", "library", newLibrary.getName());
+                    } catch (MediaLibraryPersistenceException | MediaLibraryValidationException e) {
+                        view.displayErrors(e.getMessage());
+                    }
                     break;
                 
                 // LIST LIBRARIES
@@ -128,11 +140,11 @@ public class MediaLibraryController {
     }
     
     private List<Library> getLibraryList() throws MediaLibraryPersistenceException {
-        return dao.getAllLibraries();
+        return service.getAllLibraries();
     }
 
     private List<Media> getMediaList() throws MediaLibraryPersistenceException {
-        return dao.getAllMedia();
+        return service.getAllMedia();
     }
     
 }

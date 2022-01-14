@@ -1,5 +1,4 @@
 
-
 package com.sv.medialibrary2022.servicelayer;
 
 import com.sv.medialibrary2022.dao.MediaLibraryDao;
@@ -25,14 +24,11 @@ public class ServiceLayerImpl implements ServiceLayer {
     }
 
     @Override
-    public boolean checkForDuplicates(List<Media> media, Media item) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void createMedia(Media media) throws MediaLibraryValidationException, MediaLibraryPersistenceException {
+    public boolean createMedia(Media media) throws MediaLibraryValidationException, MediaLibraryPersistenceException {
         validateMediaData(media);
+        boolean duplicate = checkForDuplicateMedia(dao.getAllMedia(), media);
         dao.addMedia(media);
+        return duplicate;
     }
 
     @Override
@@ -42,25 +38,57 @@ public class ServiceLayerImpl implements ServiceLayer {
     }
 
     @Override
-    public List<Media> findMedia(String search) {
-        dao.findMedia(search);
+    public List<Media> findMedia(String search) throws MediaLibraryPersistenceException{
+        return dao.findMedia(search);
     }
 
     @Override
-    public void modifyLibrary(String[] libraryArray) throws MediaLibraryPersistenceException, MediaLibraryValidationException {
+    public boolean modifyLibrary(String[] libraryArray) throws MediaLibraryPersistenceException, MediaLibraryValidationException {
         
         if (libraryArray[1].isBlank() || libraryArray[2].isBlank()) {
             throw new MediaLibraryValidationException("ERROR: The NAME and LOCATION fields must be filled out.");
         }
+        
+        if (libraryArray[3].isEmpty()) {
+            libraryArray[3] = " ";
+        }
+        
+        Library l = new Library(libraryArray[0]);
+        l.setName(libraryArray[1]);
+        l.setLocation(libraryArray[2]);
+        l.setDescription(libraryArray[3]);
+        
+        boolean duplicate = false;
+        if (checkForDuplicateLibrary(dao.getAllLibraries(), l)) {
+            duplicate = true;
+        }
+        dao.modifyLibrary(l);
+        return duplicate;
     }
 
     @Override
-    public void modifyMedia(String[] mediaArray) throws MediaLibraryPersistenceException, MediaLibraryValidationException {
+    public boolean modifyMedia(String[] mediaArray) throws MediaLibraryPersistenceException, MediaLibraryValidationException {
         
         if (mediaArray[1].isBlank() || mediaArray[6].isBlank()) {
             throw new MediaLibraryValidationException("ERROR: The TITLE and FORMAT fields must be filled out.");
         }
-        dao.modifyMedia(mediaArray);
+        Media m = new Media(mediaArray[0]);
+        m.setTitle(mediaArray[1]);
+        m.setCreator(mediaArray[2]);
+        m.setDescription(mediaArray[3]);
+        m.setYear(mediaArray[4]);
+        m.setGenre(mediaArray[5]);
+        m.setFormat(mediaArray[6]);
+        m.setLibrary(mediaArray[7]);
+        
+        boolean duplicate = false;
+        
+        if(checkForDuplicateMedia(dao.getAllMedia(), m)) {
+            duplicate = true;
+        }
+        
+        dao.modifyMedia(m);
+        return duplicate;
     }
 
     @Override
@@ -102,5 +130,29 @@ public class ServiceLayerImpl implements ServiceLayer {
             throw new MediaLibraryValidationException("ERROR: The NAME and LOCATION fields must be filled out");
         }
     }
+    
+    private boolean checkForDuplicateMedia(List<Media> media, Media item) {
+        
+        for (Media m : media) {
+            if (m.getTitle().toLowerCase().equals(item.getTitle().toLowerCase()) && m.getFormat().toLowerCase().equals(item.getFormat().toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean checkForDuplicateLibrary(List<Library> libraries, Library library) {
+        
+        for (Library l : libraries) {
+            if (l.getName().toLowerCase().equals(library.getName().toLowerCase()) && l.getLocation().toLowerCase().equals(library.getLocation().toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
+
+
+
+

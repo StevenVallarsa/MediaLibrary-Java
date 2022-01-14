@@ -16,14 +16,14 @@ public interface MediaLibraryDao {
      * 
      * @return List containing all Media in all the Libraries
      */
-    List<Media> getAllMedia() throws MediaLibraryPersistenceException;
+    List<Media> getAllMedia();
     
     /**
      * Return a List of all Library objects
      * 
      * @return List containing all Libraries
      */
-    List<Library> getAllLibraries() throws MediaLibraryPersistenceException;
+    List<Library> getAllLibraries();
     
     /**
      * Add the given media to the collection and associate it with its ID.
@@ -59,7 +59,7 @@ public interface MediaLibraryDao {
      * @param libraryID ID of the Library item to be retrieved
      * @return Library object of the given libraryID, or null if no such ID exists
      */
-    Library getLibrary (String libraryID) throws MediaLibraryPersistenceException;
+    Library getLibrary (String libraryID);
     
     /**
      * Removes Media object with the given ID
@@ -82,17 +82,17 @@ public interface MediaLibraryDao {
     /**
      * Move the Media object of mediaID to Library object of libraryID
      * 
-     * @param media String array of the items to modify an existing Media object
+     * @param m modified Media object
      * @return Media object (with Library ID)
      */
-    void modifyMedia(String[] media) throws MediaLibraryPersistenceException;
+    void modifyMedia(Media m) throws MediaLibraryPersistenceException;
     
     /**
      * 
-     * @param library String array of the items to modify an existing Library object
-     * @return Library object 
+     * @param l modified Library object 
+     * @return void 
      */
-    void modifyLibrary(String[] library) throws MediaLibraryPersistenceException;
+    void modifyLibrary(Library l) throws MediaLibraryPersistenceException;
     
     
 

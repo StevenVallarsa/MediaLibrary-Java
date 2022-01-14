@@ -1,3 +1,2 @@
 14
 00::Default Library::Book Return Cart::The default location for new books
-12::Bedroom Bookshelf::bedroom::none
