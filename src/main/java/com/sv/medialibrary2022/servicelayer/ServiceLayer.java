@@ -12,8 +12,8 @@ import java.util.List;
  */
 public interface ServiceLayer {
     boolean checkForDuplicates(List<Media> media, Media item);
-    void createMedia(Media media) throws MediaLibraryValidationException;
-    void createLibrary(Library library) throws MediaLibraryValidationException;
+    void createMedia(Media media) throws MediaLibraryValidationException, MediaLibraryPersistenceException;
+    void createLibrary(Library library) throws MediaLibraryValidationException, MediaLibraryPersistenceException;
     List<Media> findMedia(String search);
     void modifyLibrary(String[] libraryArray);
     void modifyMedia(String[] mediaArray);
@@ -21,8 +21,4 @@ public interface ServiceLayer {
     Library removeLibrary(String id);
     List<Library> getAllLibraries();
     List<Media> getAllMedia();
-    
-    
-    
-    
 }
