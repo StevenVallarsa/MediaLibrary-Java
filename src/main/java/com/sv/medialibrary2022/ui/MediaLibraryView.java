@@ -3,6 +3,7 @@ package com.sv.medialibrary2022.ui;
 
 import com.sv.medialibrary2022.dto.Library;
 import com.sv.medialibrary2022.dto.Media;
+import com.sv.medialibrary2022.servicelayer.MediaLibraryValidationException;
 import java.text.CharacterIterator;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -114,7 +115,7 @@ public class MediaLibraryView {
         }
     }
     
-    public void displayMediaItem(List<Library> libraries, List<Media> media) {
+    public void displayMediaItem(List<Library> libraries, List<Media> media) throws MediaLibraryValidationException {
         String id = getIdNumber(true);
         if (id == null || id.isBlank()) {
             // Nothing to see here. Move along. Move along.
@@ -167,7 +168,7 @@ public class MediaLibraryView {
         }
     }
 
-    public String[] modifyMediaOrLibrary(List<Library> libraries, List<Media> media) {
+    public String[] modifyMediaOrLibrary(List<Library> libraries, List<Media> media) throws MediaLibraryValidationException {
         
         String input = getIdNumber(false);
         if (input == null) return null;
@@ -241,6 +242,7 @@ public class MediaLibraryView {
         String genre = io.readString("GENRE: " + media.getGenre());
         String format = io.readString("FORMAT: " + media.getFormat());
         String library = io.readString("LIBRARY: " + media.getLibrary());
+        if (library.isBlank()) library = media.getLibrary();
         
         if (Arrays.asList(libraryIDs).contains(library)) {
             if (title.isBlank()) title = media.getTitle();
@@ -249,7 +251,6 @@ public class MediaLibraryView {
             if (year.isBlank()) year = media.getYear();
             if (genre.isBlank()) genre = media.getGenre();
             if (format.isBlank()) format = media.getFormat();
-            if (library.isBlank()) library = media.getLibrary();
             
             return new String[] {media.getMediaID(), title, creator, description, year, genre, format, library};
         }
@@ -258,7 +259,7 @@ public class MediaLibraryView {
         return null;
     }
     
-    public String removeMediaOrLibrary(List<Library> libraries, List<Media> media) {
+    public String removeMediaOrLibrary(List<Library> libraries, List<Media> media) throws MediaLibraryValidationException {
         io.print("\n-+-+-+-+-+-+-+-+-+-+-+-");
         io.print("REMOVE MEDIA OR LIBRARY");
         io.print("-+-+-+-+-+-+-+-+-+-+-+-");
@@ -279,27 +280,27 @@ public class MediaLibraryView {
         }
     }
     
-    public String getIdNumber(boolean mediaSearch) {
+    public String getIdNumber(boolean mediaSearch) throws MediaLibraryValidationException{
         io.print("\nSelect one of the ID numbers above");
         String input = io.readString("PRESS ENTER TO RETURN TO MAIN MENU");
         if (input.isBlank()) return null;
         try {
             int testForInt = Integer.parseInt(input);
             if (mediaSearch && input.length() == 2) {
-                throw new Exception("Only media IDs are accepted for this operation");
+                throw new MediaLibraryValidationException("Only media IDs are accepted for this operation");
             }
             if (input.length() < 2 || input.length() > 3) {
-                throw new Exception("That's not a valid ID number");
+                throw new MediaLibraryValidationException("That's not a valid ID number");
             }
             if (input.equals("00") && !mediaSearch) {
-                throw new Exception("You cannot modify the default library");
+                throw new MediaLibraryValidationException("You cannot modify the default library");
             }
             
         } catch (NumberFormatException e) {
-            io.print("That's not an ID number");
+            displayErrors("That's not an ID number");
             return null;
-        } catch (Exception e) {
-            io.print(e.getMessage());
+        } catch (MediaLibraryValidationException e) {
+            displayErrors(e.getMessage());
             return null;
         }
         return input;

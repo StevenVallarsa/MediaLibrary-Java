@@ -36,14 +36,10 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     public static final String MEDIA_FILE = "media.txt";
     public static final String DELIMITER = "::";
     
-    
-    
-    // Load libraries at runtime
     public MediaLibraryDaoImpl() throws MediaLibraryPersistenceException {
         loadLibrary();
         loadMedia();
     }
- 
     
 /*    private void setDefaultLibrary() {
         Library lib = new Library("00");
@@ -148,14 +144,14 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         List<Media> results = new ArrayList<>();
         searchTerm = searchTerm.toLowerCase();
         for (Media m : media) {
-            if (m.getMediaID().contains(searchTerm) ||
-                    m.getTitle().toLowerCase().contains(searchTerm) ||
-                    m.getDescription().toLowerCase().contains(searchTerm) ||
-                    m.getCreator().toLowerCase().contains(searchTerm) ||
-                    m.getFormat().toLowerCase().contains(searchTerm) ||
-                    m.getYear().contains(searchTerm) ||
-                    m.getFormat().toLowerCase().contains(searchTerm) ||
-                    m.getGenre().toLowerCase().contains(searchTerm) ) {
+            if (m.getMediaID().contains(searchTerm) 
+                    || m.getTitle().toLowerCase().contains(searchTerm)
+                    || m.getDescription().toLowerCase().contains(searchTerm)
+                    || m.getCreator().toLowerCase().contains(searchTerm)
+                    || m.getFormat().toLowerCase().contains(searchTerm)
+                    || m.getYear().contains(searchTerm)
+                    || m.getFormat().toLowerCase().contains(searchTerm)
+                    || m.getGenre().toLowerCase().contains(searchTerm)) {
                 results.add(m);
             }
         }

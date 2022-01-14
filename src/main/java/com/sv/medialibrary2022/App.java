@@ -2,6 +2,8 @@
 package com.sv.medialibrary2022;
 
 import com.sv.medialibrary2022.controller.MediaLibraryController;
+import com.sv.medialibrary2022.dao.MediaLibraryAuditDao;
+import com.sv.medialibrary2022.dao.MediaLibraryAuditDaoImpl;
 import com.sv.medialibrary2022.dao.MediaLibraryDao;
 import com.sv.medialibrary2022.dao.MediaLibraryPersistenceException;
 import com.sv.medialibrary2022.dao.MediaLibraryDaoImpl;
@@ -25,7 +27,8 @@ public class App {
         UserIO myIO = new UserIOImpl();
         MediaLibraryView myView = new MediaLibraryView(myIO);
         MediaLibraryDao dao = new MediaLibraryDaoImpl();
-        ServiceLayer service = new ServiceLayerImpl(dao);
+        MediaLibraryAuditDao auditDao = new MediaLibraryAuditDaoImpl();
+        ServiceLayer service = new ServiceLayerImpl(dao, auditDao);
         MediaLibraryController controller = new MediaLibraryController(service, myView);
         
         controller.run();

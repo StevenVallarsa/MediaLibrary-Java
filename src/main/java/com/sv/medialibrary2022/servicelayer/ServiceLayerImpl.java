@@ -1,6 +1,7 @@
 
 package com.sv.medialibrary2022.servicelayer;
 
+import com.sv.medialibrary2022.dao.MediaLibraryAuditDao;
 import com.sv.medialibrary2022.dao.MediaLibraryDao;
 import com.sv.medialibrary2022.dao.MediaLibraryPersistenceException;
 import com.sv.medialibrary2022.dto.Library;
@@ -17,10 +18,12 @@ import java.util.List;
  */
 public class ServiceLayerImpl implements ServiceLayer {
     
-    MediaLibraryDao dao;
+    private MediaLibraryDao dao;
+    private MediaLibraryAuditDao auditDao;
 
-    public ServiceLayerImpl(MediaLibraryDao dao) {
+    public ServiceLayerImpl(MediaLibraryDao dao, MediaLibraryAuditDao auditDao) {
         this.dao = dao;
+        this.auditDao = auditDao;
     }
 
     @Override
@@ -28,42 +31,22 @@ public class ServiceLayerImpl implements ServiceLayer {
         validateMediaData(media);
         boolean duplicate = checkForDuplicateMedia(dao.getAllMedia(), media);
         dao.addMedia(media);
+        auditDao.writeAuditEntry("A " + media.getFormat() + " with the title " + media.getTitle() + " was created. ");
         return duplicate;
+        
     }
 
     @Override
     public void createLibrary(Library library) throws MediaLibraryValidationException, MediaLibraryPersistenceException {
         validateLibraryData(library);
+        auditDao.writeAuditEntry("The bookshelf " + library.getName() + " was created in the " + library.getLocation() + ".");
+        
         dao.addLibrary(library);
     }
 
     @Override
     public List<Media> findMedia(String search) throws MediaLibraryPersistenceException{
         return dao.findMedia(search);
-    }
-
-    @Override
-    public boolean modifyLibrary(String[] libraryArray) throws MediaLibraryPersistenceException, MediaLibraryValidationException {
-        
-        if (libraryArray[1].isBlank() || libraryArray[2].isBlank()) {
-            throw new MediaLibraryValidationException("ERROR: The NAME and LOCATION fields must be filled out.");
-        }
-        
-        if (libraryArray[3].isEmpty()) {
-            libraryArray[3] = " ";
-        }
-        
-        Library l = new Library(libraryArray[0]);
-        l.setName(libraryArray[1]);
-        l.setLocation(libraryArray[2]);
-        l.setDescription(libraryArray[3]);
-        
-        boolean duplicate = false;
-        if (checkForDuplicateLibrary(dao.getAllLibraries(), l)) {
-            duplicate = true;
-        }
-        dao.modifyLibrary(l);
-        return duplicate;
     }
 
     @Override
@@ -88,17 +71,46 @@ public class ServiceLayerImpl implements ServiceLayer {
         }
         
         dao.modifyMedia(m);
+        auditDao.writeAuditEntry("A " + m.getFormat() + " with the title " + m.getTitle() + " was modified. ");
         return duplicate;
     }
 
     @Override
+    public boolean modifyLibrary(String[] libraryArray) throws MediaLibraryPersistenceException, MediaLibraryValidationException {
+        
+        if (libraryArray[1].isBlank() || libraryArray[2].isBlank()) {
+            throw new MediaLibraryValidationException("ERROR: The NAME and LOCATION fields must be filled out.");
+        }
+        
+        if (libraryArray[3].isEmpty()) {
+            libraryArray[3] = " ";
+        }
+        
+        Library l = new Library(libraryArray[0]);
+        l.setName(libraryArray[1]);
+        l.setLocation(libraryArray[2]);
+        l.setDescription(libraryArray[3]);
+        
+        boolean duplicate = false;
+        if (checkForDuplicateLibrary(dao.getAllLibraries(), l)) {
+            duplicate = true;
+        }
+        dao.modifyLibrary(l);
+        auditDao.writeAuditEntry("The bookshelf " + l.getName() + " was modified.");
+        return duplicate;
+    }
+    @Override
     public Media removeMedia(String id) throws MediaLibraryPersistenceException {
-        return dao.removeMedia(id);
+        Media removedMedia = dao.removeMedia(id);
+        auditDao.writeAuditEntry("A " + removedMedia.getFormat() + " titled " + removedMedia.getTitle() + " was permanently deleted from the media library.");
+        return removedMedia;
     }
 
     @Override
     public Library removeLibrary(String id) throws MediaLibraryPersistenceException {
-        return dao.removeLibrary(id);
+        Library removedLibrary = dao.removeLibrary(id);
+        auditDao.writeAuditEntry("The library " + removedLibrary.getName() + " was permanently deleted");
+        return removedLibrary;
     }
 
     @Override
