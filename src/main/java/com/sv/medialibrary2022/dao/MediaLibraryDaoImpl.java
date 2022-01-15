@@ -130,9 +130,6 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     @Override
     public Library addLibrary(Library libraryItem) throws MediaLibraryPersistenceException {
         libraryItem.setLibraryID(String.valueOf(libraryIndex++));
-        if (libraryItem.getDescription().isEmpty()) {
-            libraryItem.setDescription(" ");
-        }
         Library prevLibrary = libraries.put(libraryItem.getLibraryID(), libraryItem);
         writeLibrary();
         return prevLibrary;
@@ -172,13 +169,6 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
 
     @Override
     public Library removeLibrary(String libraryID) throws MediaLibraryPersistenceException {
-        List<Media> mediaList = getAllMedia();
-        for (Media m : mediaList) {
-            if (m.getLibrary().equals(libraryID)) {
-                m.setLibrary("00");
-                media.put(m.getMediaID(), m);
-            }
-        }
         Library removedLibrary = libraries.remove(libraryID);
         writeMedia();
         writeLibrary();

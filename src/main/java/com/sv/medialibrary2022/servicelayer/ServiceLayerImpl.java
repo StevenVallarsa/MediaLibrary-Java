@@ -39,9 +39,11 @@ public class ServiceLayerImpl implements ServiceLayer {
     @Override
     public void createLibrary(Library library) throws MediaLibraryValidationException, MediaLibraryPersistenceException {
         validateLibraryData(library);
-        auditDao.writeAuditEntry("The bookshelf " + library.getName() + " was created in the " + library.getLocation() + ".");
-        
+        if (library.getDescription().isEmpty()) {
+            library.setDescription(" ");
+        }
         dao.addLibrary(library);
+        auditDao.writeAuditEntry("The bookshelf " + library.getName() + " was created in the " + library.getLocation() + ".");
     }
 
     @Override
@@ -108,6 +110,17 @@ public class ServiceLayerImpl implements ServiceLayer {
 
     @Override
     public Library removeLibrary(String id) throws MediaLibraryPersistenceException {
+        
+        // change library id to default library for 
+        // items in library about to be deleted
+        List<Media> mediaList = getAllMedia();
+        for (Media m : mediaList) {
+            if (m.getLibrary().equals(id)) {
+                m.setLibrary("00");
+                dao.modifyMedia(m);
+            }
+        }
+        
         Library removedLibrary = dao.removeLibrary(id);
         auditDao.writeAuditEntry("The library " + removedLibrary.getName() + " was permanently deleted");
         return removedLibrary;
