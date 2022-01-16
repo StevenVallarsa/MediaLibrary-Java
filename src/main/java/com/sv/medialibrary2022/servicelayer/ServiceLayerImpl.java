@@ -17,7 +17,7 @@ import java.util.List;
  * purpose: 
  */
 public class ServiceLayerImpl implements ServiceLayer {
-    
+        
     private MediaLibraryDao dao;
     private MediaLibraryAuditDao auditDao;
 
