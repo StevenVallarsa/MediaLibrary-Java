@@ -92,7 +92,9 @@ public class MediaLibraryController {
                             }
                         }
                         view.displaySuccessBanner("modified", item, title);
-                    } 
+                    } else {
+                        view.print("No changes were made.\n");
+                    }
                     break;
                     
                 // REMOVE MEDIA OR LIBRARY   

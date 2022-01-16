@@ -1,6 +1,8 @@
 
 package com.sv.medialibrary2022.dto;
 
+import java.util.Objects;
+
 /**
  *
  * @author: Steven Vallarsa
@@ -9,6 +11,64 @@ package com.sv.medialibrary2022.dto;
  * purpose: 
  */
 public class Media {
+
+    @Override
+    public String toString() {
+        return "Media{" + "mediaID=" + mediaID + ", title=" + title + ", creator=" + creator + ", description=" + description + ", year=" + year + ", genre=" + genre + ", format=" + format + ", library=" + library + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.mediaID);
+        hash = 53 * hash + Objects.hashCode(this.title);
+        hash = 53 * hash + Objects.hashCode(this.creator);
+        hash = 53 * hash + Objects.hashCode(this.description);
+        hash = 53 * hash + Objects.hashCode(this.year);
+        hash = 53 * hash + Objects.hashCode(this.genre);
+        hash = 53 * hash + Objects.hashCode(this.format);
+        hash = 53 * hash + Objects.hashCode(this.library);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Media other = (Media) obj;
+        if (!Objects.equals(this.mediaID, other.mediaID)) {
+            return false;
+        }
+        if (!Objects.equals(this.title, other.title)) {
+            return false;
+        }
+        if (!Objects.equals(this.creator, other.creator)) {
+            return false;
+        }
+        if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        if (!Objects.equals(this.year, other.year)) {
+            return false;
+        }
+        if (!Objects.equals(this.genre, other.genre)) {
+            return false;
+        }
+        if (!Objects.equals(this.format, other.format)) {
+            return false;
+        }
+        if (!Objects.equals(this.library, other.library)) {
+            return false;
+        }
+        return true;
+    }
 
     private String mediaID;
     private String title;

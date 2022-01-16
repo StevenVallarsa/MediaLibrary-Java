@@ -68,11 +68,11 @@ public class ServiceLayerImpl implements ServiceLayer {
         
         boolean duplicate = false;
         
+        dao.modifyMedia(m);
+        
         if(checkForDuplicateMedia(dao.getAllMedia(), m)) {
             duplicate = true;
         }
-        
-        dao.modifyMedia(m);
         auditDao.writeAuditEntry("A " + m.getFormat() + " with the title " + m.getTitle() + " was modified. ");
         return duplicate;
     }
@@ -159,7 +159,9 @@ public class ServiceLayerImpl implements ServiceLayer {
     private boolean checkForDuplicateMedia(List<Media> media, Media item) {
         
         for (Media m : media) {
-            if (m.getTitle().toLowerCase().equals(item.getTitle().toLowerCase()) && m.getFormat().toLowerCase().equals(item.getFormat().toLowerCase())) {
+            if (m.getTitle().toLowerCase().equals(item.getTitle().toLowerCase()) 
+                    && m.getFormat().toLowerCase().equals(item.getFormat().toLowerCase()) 
+                    && !m.getLibrary().equals(item.getLibrary())) {
                 return true;
             }
         }

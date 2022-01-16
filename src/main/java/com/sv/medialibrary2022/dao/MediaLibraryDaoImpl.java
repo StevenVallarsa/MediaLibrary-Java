@@ -11,11 +11,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
 
 /**
  *
@@ -32,11 +30,17 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     private int mediaIndex = 100;
     private int libraryIndex = 10;
     
-    public static final String LIBRARY_FILE = "library.txt";
-    public static final String MEDIA_FILE = "media.txt";
+    public final String LIBRARY_FILE;
+    public final String MEDIA_FILE;
     public static final String DELIMITER = "::";
     
     public MediaLibraryDaoImpl() throws MediaLibraryPersistenceException {
+        this("library.txt", "media.txt");
+    }
+    
+    public MediaLibraryDaoImpl(String libraryFile, String mediaFile) throws MediaLibraryPersistenceException {
+        LIBRARY_FILE = libraryFile;
+        MEDIA_FILE = mediaFile;
         loadLibrary();
         loadMedia();
     }
