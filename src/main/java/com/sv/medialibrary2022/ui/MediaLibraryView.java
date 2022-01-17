@@ -77,7 +77,7 @@ public class MediaLibraryView {
     }
 
     public void displaySuccessBanner(String action, String format, String title) {
-        io.print("You successfully " + action + " a " + format + " named \"" + title + "\".");
+        io.print("\nYou successfully " + action + " a " + format + " named \"" + title + "\".");
     }
 
     public void displayLibrariesAndMedia(List<Library> libraries, List<Media> media) {

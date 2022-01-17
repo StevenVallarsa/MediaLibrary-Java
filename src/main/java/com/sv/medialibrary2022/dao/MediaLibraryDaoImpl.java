@@ -44,74 +44,6 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         loadLibrary();
         loadMedia();
     }
-    
-/*    private void setDefaultLibrary() {
-        Library lib = new Library("00");
-        lib.setName("Default Library");
-        lib.setLocation("Book Return Cart");
-        lib.setDescription("The default location for new books");
-        libraries.put(lib.getLibraryID(), lib);
-        
-        Library lib2 = new Library(String.valueOf(libraryIndex++));
-        lib2.setName("Visual Media Shelf");
-        lib2.setLocation("By TV");
-        lib2.setDescription("");
-        libraries.put(lib2.getLibraryID(), lib2);
-        
-    }
-    
-    private void setDefaultMedia() {
-        
-        Media m1 = new Media(String.valueOf(mediaIndex++));
-        m1.setTitle("2001: A Space Odyssey");
-        m1.setCreator("Arthur C Clark");
-        m1.setDescription("");
-        m1.setYear("1968");
-        m1.setGenre("Sci Fi");
-        m1.setFormat("Paperback");
-        m1.setLibrary("00");
-        media.put(m1.getMediaID(), m1);
-        
-        Media mm1 = new Media(String.valueOf(mediaIndex++));
-        mm1.setTitle("2001: A Space Odyssey");
-        mm1.setCreator("Arthur C Clark / Stanley Kubrick");
-        mm1.setDescription("");
-        mm1.setYear("1968");
-        mm1.setGenre("Sci Fi");
-        mm1.setFormat("DVD");
-        mm1.setLibrary("00");
-        media.put(mm1.getMediaID(), mm1);
-        
-        Media m2 = new Media(String.valueOf(mediaIndex++));
-        m2.setTitle("2010: Odyssey Two");
-        m2.setCreator("Arthur C Clark");
-        m2.setDescription("");
-        m2.setYear("1982");
-        m2.setGenre("Sci Fi");
-        m2.setFormat("Paperback");
-        m2.setLibrary("00");
-        media.put(m2.getMediaID(), m2);
-
-        Media m3 = new Media(String.valueOf(mediaIndex++));
-        m3.setTitle("2061: Odyssey Three");
-        m3.setCreator("Arthur C Clark");
-        m3.setDescription("");
-        m3.setYear("1987");
-        m3.setGenre("Sci Fi");
-        m3.setFormat("Hard Cover");
-        media.put(m3.getMediaID(), m3);
-        
-        Media m4 = new Media(String.valueOf(mediaIndex++));
-        m4.setTitle("3001: The Final Odyssey");
-        m4.setCreator("Arthur C Clark");
-        m4.setDescription("test");
-        m4.setYear("1997");
-        m4.setGenre("Sci Fi");
-        m4.setFormat("Hard Cover");
-        media.put(m4.getMediaID(), m4);
-        
-    }
-*/
 
     @Override
     public List<Media> getAllMedia() {
@@ -190,11 +122,10 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         libraries.put(l.getLibraryID(), l);
         writeLibrary();
     }
-    
-    
-    
-    
-    
+
+
+
+
 
     private Library unmarshallLibrary(String libraryAsText) {
         String[] libraryTokens = libraryAsText.split(DELIMITER);
@@ -221,6 +152,7 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         
         return mediaFromFile;
     }
+    
     
     
     
@@ -299,12 +231,11 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
         }
         
         out.println(String.valueOf(libraryIndex));
-        String libraryAsText;
-        for (Library library : libraries.values()) {
-            libraryAsText = marshallLibrary(library);
+        libraries.values().stream().forEach(l -> {
+            String libraryAsText = marshallLibrary(l);
             out.println(libraryAsText);
             out.flush();
-        }
+        });
         out.close();
     }
     
@@ -318,12 +249,11 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
             throw new MediaLibraryPersistenceException("Could not save media data.", e);
         }
         out.println(String.valueOf(mediaIndex));
-        String mediaAsText;
-        for (Media mediaM : media.values()) {
-            mediaAsText = marshallMedia(mediaM);
+        media.values().stream().forEach(m -> {
+            String mediaAsText = marshallMedia(m);
             out.println(mediaAsText);
             out.flush();
-        }
+        });
         out.close();
     }
 }

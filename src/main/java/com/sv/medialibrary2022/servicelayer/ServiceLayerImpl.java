@@ -7,6 +7,7 @@ import com.sv.medialibrary2022.dao.MediaLibraryPersistenceException;
 import com.sv.medialibrary2022.dto.Library;
 import com.sv.medialibrary2022.dto.Media;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
