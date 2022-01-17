@@ -8,6 +8,7 @@ import java.text.CharacterIterator;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.management.Descriptor;
 
 /**
@@ -149,22 +150,27 @@ public class MediaLibraryView {
         io.print("SEARCH MEDIA LIBRARY");
         io.print("-+-+-+-+-+-+-+-+-+-+");
         io.printMedia("%s : %s : %-30s : %-20s : %s%n",new String[] {"ID", "LIB", "TITLE", "CREATOR", "FORMAT"});
+        
+        if (searchResults.size() == 0) {
+            io.print("That media item doesn't exist");        
+        } else {
+            
+            for (Media m : searchResults) {
+                String id = m.getMediaID();
+                String title = m.getTitle();
+                String creator = m.getCreator();
+                String format = m.getFormat();
+                String lib = m.getLibrary();
 
-        for (Media m : searchResults) {
-            String id = m.getMediaID();
-            String title = m.getTitle();
-            String creator = m.getCreator();
-            String format = m.getFormat();
-            String lib = m.getLibrary();
+                if (title.length() > 29) {
+                    title = title.substring(0, 27) + "...";
+                }
+                if (creator.length() > 19) {
+                    creator = creator.substring(0, 17) + "...";
+                }
 
-            if (title.length() > 29) {
-                title = title.substring(0, 27) + "...";
+                io.printMedia("%s : %s : %-30s : %-20s : %s%n",new String[] {id, lib, title, creator, format});
             }
-            if (creator.length() > 19) {
-                creator = creator.substring(0, 17) + "...";
-            }
-
-            io.printMedia("%s : %s : %-30s : %-20s : %s%n",new String[] {id, lib, title, creator, format});
         }
     }
 
@@ -193,24 +199,16 @@ public class MediaLibraryView {
     }
     
     private Media findMedia(List<Media> media, String input) {
-        for (Media item : media) {
-            if (item.getMediaID().equals(input)) {
-                return item;
-            }
-        }
-        io.print("That media item doesn't exist");        
-        return null;
+        
+        return media.stream()
+                .filter(m -> m.getMediaID() == input)
+                .collect(Collectors.toList()).get(0);
     }
     
+    // not yet implemented
     private Library findLibrary(List<Library> libraries, String input) {
-        for (Library library : libraries) {
-            if (library.getLibraryID().equals(input)) {
-                return library;
+        return libraries.stream().filter(l -> l.getLibraryID() == input).collect(Collectors.toList()).get(0);
             }
-        }
-        io.print("That library doesn't exist");
-        return null;
-    }
     
     private String[] modifyLibrary(Library library) {
         io.print("\n-+-+-+-+-+-+-+-+-+-+");

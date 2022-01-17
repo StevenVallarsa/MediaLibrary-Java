@@ -53,7 +53,7 @@ com.sv.MediaLibrary.dto
 - added stateful unit testing to DAO with dummy text files
 - added service layer unit testing with use of DAO stub implementation 
 
-### 4 - Fourth Iteration will add Lambdas and Streams -- BRANCH 4-lambda branch
+### 4 - Fourth Iteration will add Lambdas and Streams -- BRANCH 4-Lambdas branch
 
 ### 5 - Fifth Iteration will add Spring Boot for the dependency injection -- BRANCH 5-dependency_injection"
 
