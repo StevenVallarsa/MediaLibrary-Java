@@ -10,7 +10,7 @@ import java.util.Scanner;
  *    date: 2022-01-10
  * purpose: 
  */
-public class UserIOImpl implements UserIO {
+public class UserIOConsoleImpl implements UserIO {
     
     Scanner scanner = new Scanner(System.in);
 

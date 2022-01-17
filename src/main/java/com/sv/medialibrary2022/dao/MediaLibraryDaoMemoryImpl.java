@@ -22,7 +22,7 @@ import java.util.Scanner;
  *    date: 2022-01-10
  * purpose: 
  */
-public class MediaLibraryDaoImpl implements MediaLibraryDao {
+public class MediaLibraryDaoMemoryImpl implements MediaLibraryDao {
     
     private Map<String, Media> media = new HashMap<>();
     private Map<String, Library> libraries = new HashMap<>();
@@ -34,11 +34,11 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
     public final String MEDIA_FILE;
     public static final String DELIMITER = "::";
     
-    public MediaLibraryDaoImpl() throws MediaLibraryPersistenceException {
+    public MediaLibraryDaoMemoryImpl() throws MediaLibraryPersistenceException {
         this("library.txt", "media.txt");
     }
     
-    public MediaLibraryDaoImpl(String libraryFile, String mediaFile) throws MediaLibraryPersistenceException {
+    public MediaLibraryDaoMemoryImpl(String libraryFile, String mediaFile) throws MediaLibraryPersistenceException {
         LIBRARY_FILE = libraryFile;
         MEDIA_FILE = mediaFile;
         loadLibrary();

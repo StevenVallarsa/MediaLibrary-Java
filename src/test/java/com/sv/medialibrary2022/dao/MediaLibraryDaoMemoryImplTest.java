@@ -20,11 +20,11 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author StevePro
  */
-public class MediaLibraryDaoImplTest {
+public class MediaLibraryDaoMemoryImplTest {
     
     MediaLibraryDao testDao;
     
-    public MediaLibraryDaoImplTest() {
+    public MediaLibraryDaoMemoryImplTest() {
     }
     
     @BeforeAll
@@ -53,7 +53,7 @@ public class MediaLibraryDaoImplTest {
         out.flush();
         out.close();
         
-        testDao = new MediaLibraryDaoImpl(libraryFile, mediaFile);
+        testDao = new MediaLibraryDaoMemoryImpl(libraryFile, mediaFile);
         
     }
     

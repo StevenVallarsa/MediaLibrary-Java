@@ -201,13 +201,13 @@ public class MediaLibraryView {
     private Media findMedia(List<Media> media, String input) {
         
         return media.stream()
-                .filter(m -> m.getMediaID() == input)
+                .filter(m -> m.getMediaID().equals(input))
                 .collect(Collectors.toList()).get(0);
     }
     
     // not yet implemented
     private Library findLibrary(List<Library> libraries, String input) {
-        return libraries.stream().filter(l -> l.getLibraryID() == input).collect(Collectors.toList()).get(0);
+        return libraries.stream().filter(l -> l.getLibraryID().equals(input)).collect(Collectors.toList()).get(0);
             }
     
     private String[] modifyLibrary(Library library) {
