@@ -9,6 +9,8 @@ import com.sv.medialibrary2022.servicelayer.ServiceLayer;
 import com.sv.medialibrary2022.ui.MediaLibraryView;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -17,11 +19,14 @@ import java.util.List;
  *    date: 2022-01-10
  * purpose: Work with user input 
  */
+
+@Component
 public class MediaLibraryController {
     
     private MediaLibraryView view;
     private ServiceLayer service;
     
+    @Autowired
     public MediaLibraryController(ServiceLayer service, MediaLibraryView view) {
         this.service = service;
         this.view = view;

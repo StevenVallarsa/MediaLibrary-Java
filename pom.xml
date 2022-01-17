@@ -25,11 +25,12 @@
             <scope>test</scope>
         </dependency>
         
+        <!-- Used for both Spring XML and Sprint Anotations Dependency Injections -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>5.2.2.RELEASE</version>
-        </dependency>  
+        </dependency>
               
     </dependencies>
     <properties>

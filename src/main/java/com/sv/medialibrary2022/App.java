@@ -14,6 +14,7 @@ import com.sv.medialibrary2022.ui.MediaLibraryView;
 import com.sv.medialibrary2022.ui.UserIO;
 import com.sv.medialibrary2022.ui.UserIOConsoleImpl;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -26,14 +27,26 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class App {
     public static void main(String[] args) throws MediaLibraryPersistenceException, MediaLibraryValidationException {
+        
+//        // ORIGINAL HARD-CODED DEPENDECY INJECTION
 //        UserIO myIO = new UserIOConsoleImpl();
 //        MediaLibraryView myView = new MediaLibraryView(myIO);
 //        MediaLibraryDao dao = new MediaLibraryDaoMemoryImpl();
 //        MediaLibraryAuditDao auditDao = new MediaLibraryAuditDaoImpl();
 //        ServiceLayer service = new ServiceLayerImpl(dao, auditDao);
 //        MediaLibraryController controller = new MediaLibraryController(service, myView);
-        ApplicationContext appContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-        MediaLibraryController controller = appContext.getBean("controller", MediaLibraryController.class);
+
+//        // SPRING XML DEPENDECY INJECTION
+//        ApplicationContext appContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+//        MediaLibraryController controller = appContext.getBean("controller", MediaLibraryController.class);
+
+
+        // SPRING ANOTATION DEPENDENCY INJECTION
+        // The name of the bean in this case is the full controller filename in camel case
+        AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext();
+        appContext.scan("com.sv.medialibrary2022");
+        appContext.refresh();
+        MediaLibraryController controller = appContext.getBean("mediaLibraryController", MediaLibraryController.class);
         controller.run();
     }
 }

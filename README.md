@@ -57,6 +57,8 @@ com.sv.MediaLibrary.dto
 - changed relevant for loops into lambdas
 
 ### 5 - Fifth Iteration will add Spring Boot for the dependency injection -- BRANCH 5-dependency_injection"
+- Started by adding old fashioned XML injection WORKS
+- Switched to Anotation injection
 
 ### 6 - Sixth Iteration will add a database to hold the library data -- BRANCH 6-database
 

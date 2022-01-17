@@ -2,6 +2,7 @@
 package com.sv.medialibrary2022.ui;
 
 import java.util.Scanner;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -10,6 +11,8 @@ import java.util.Scanner;
  *    date: 2022-01-10
  * purpose: 
  */
+
+@Component
 public class UserIOConsoleImpl implements UserIO {
     
     Scanner scanner = new Scanner(System.in);

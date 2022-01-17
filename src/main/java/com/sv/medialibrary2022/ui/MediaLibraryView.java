@@ -4,12 +4,12 @@ package com.sv.medialibrary2022.ui;
 import com.sv.medialibrary2022.dto.Library;
 import com.sv.medialibrary2022.dto.Media;
 import com.sv.medialibrary2022.servicelayer.MediaLibraryValidationException;
-import java.text.CharacterIterator;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.management.Descriptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -18,10 +18,13 @@ import javax.management.Descriptor;
  *    date: 2022-01-10
  * purpose: 
  */
+
+@Component
 public class MediaLibraryView {
     
     private UserIO io;
     
+    @Autowired
     public MediaLibraryView(UserIO io) {
         this.io = io;
     }

@@ -8,6 +8,8 @@ import com.sv.medialibrary2022.dto.Library;
 import com.sv.medialibrary2022.dto.Media;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -17,11 +19,14 @@ import java.util.stream.Collectors;
  *    date: 2022-01-13
  * purpose: 
  */
+
+@Component
 public class ServiceLayerImpl implements ServiceLayer {
         
     private MediaLibraryDao dao;
     private MediaLibraryAuditDao auditDao;
 
+    @Autowired
     public ServiceLayerImpl(MediaLibraryDao dao, MediaLibraryAuditDao auditDao) {
         this.dao = dao;
         this.auditDao = auditDao;

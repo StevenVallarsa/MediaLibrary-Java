@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -22,6 +23,8 @@ import java.util.Scanner;
  *    date: 2022-01-10
  * purpose: 
  */
+
+@Component
 public class MediaLibraryDaoMemoryImpl implements MediaLibraryDao {
     
     private Map<String, Media> media = new HashMap<>();

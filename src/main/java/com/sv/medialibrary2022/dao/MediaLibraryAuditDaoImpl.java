@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -14,6 +15,8 @@ import java.time.format.DateTimeFormatter;
  *    date: 2022-01-14
  * purpose: 
  */
+
+@Component
 public class MediaLibraryAuditDaoImpl implements MediaLibraryAuditDao {
 
     private static final String AUDIT_FILE = "audit.txt";
