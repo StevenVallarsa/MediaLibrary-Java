@@ -49,11 +49,12 @@ com.sv.MediaLibrary.dto
   - alert user to a duplicate title and format for an item
   - record audit log for every transaction
 
-### 3 - Third Iteration will add Unit Testing 
+### 3 - Third Iteration will add Unit Testing -- STAYED ON MAIN BRANCH
 - added stateful unit testing to DAO with dummy text files
 - added service layer unit testing with use of DAO stub implementation 
 
 ### 4 - Fourth Iteration will add Lambdas and Streams -- BRANCH 4-Lambdas branch
+- changed relevant for loops into lambdas
 
 ### 5 - Fifth Iteration will add Spring Boot for the dependency injection -- BRANCH 5-dependency_injection"
 
