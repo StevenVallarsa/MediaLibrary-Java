@@ -62,6 +62,7 @@ com.sv.MediaLibrary.dto
 - Switched unit tests to use Spring
 
 ### 6 - Sixth Iteration will add a database to hold the library data -- BRANCH 6-database
+- Change persistence from text file to relational database using SQL queries
 
 ### 7 - Seventh Iteration will add REST web connectivity -- BRANCH 7-rest
 

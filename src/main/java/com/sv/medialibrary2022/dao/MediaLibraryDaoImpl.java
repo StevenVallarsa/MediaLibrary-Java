@@ -10,10 +10,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 /**
@@ -50,12 +53,13 @@ public class MediaLibraryDaoImpl implements MediaLibraryDao {
 
     @Override
     public List<Media> getAllMedia() {
-        return new ArrayList<Media>(media.values());
+        return new ArrayList<>(media.values()).stream().sorted((o1, o2) -> o1.getTitle().compareTo(o2.getTitle())).collect(Collectors.toList());
     }
 
     @Override
     public List<Library> getAllLibraries() {
-        return new ArrayList<Library>(libraries.values());
+        return new ArrayList<Library>(libraries.values()).stream().sorted((l1, l2) -> l1.getLibraryID().compareTo(l2.getLibraryID())).collect(Collectors.toList());
+//        return new ArrayList<Library>(libraries.values());
     }
 
     @Override

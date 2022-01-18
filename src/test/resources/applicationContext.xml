@@ -16,7 +16,7 @@
             http://www.springframework.org/schema/aop  
             http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
     
-    <bean id="dao" class="com.sv.medialibrary2022.dao.MediaLibraryDaoImpl" />
+    <!--<bean id="dao" class="com.sv.medialibrary2022.dao.MediaLibraryDaoImpl" />-->
     <bean id="daoStub" class="com.sv.medialibrary2022.dao.MediaLibraryDaoStubImpl" />
     <bean id="auditDaoStub" class="com.sv.medialibrary2022.dao.MediaLibraryAuditDaoStubImpl" />
     <bean id="service" class="com.sv.medialibrary2022.servicelayer.ServiceLayerImpl">

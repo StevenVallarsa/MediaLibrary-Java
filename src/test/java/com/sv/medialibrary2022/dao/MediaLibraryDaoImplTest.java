@@ -88,28 +88,28 @@ public class MediaLibraryDaoImplTest {
         media = testDao.getAllMedia();
         
         assertEquals(2, media.size(), "The size of the media ArrayList should be '2'");
-        assertEquals("2001", media.get(1).getTitle(), "Title should be '2001");
+        assertEquals("Dune", media.get(1).getTitle(), "Title should be 'Dune");
     }
     
     @Test
     public void testAddLibraryAndMoveMediaToNewLibrary() throws MediaLibraryPersistenceException {
         
         Media m = new Media("100");
-        m.setTitle("Dune");
-        m.setCreator("Frank Herbert");
-        m.setDescription("");
-        m.setYear("1965");
-        m.setGenre("Sci-Fi");
-        m.setFormat("Paperback");
-        m.setLibrary("00");
-        testDao.addMedia(m);
-        
-        m = new Media("101");
         m.setTitle("2001");
         m.setCreator("Arthur C Clarke");
         m.setDescription("");
         m.setYear("");
         m.setGenre("");
+        m.setFormat("Paperback");
+        m.setLibrary("00");
+        testDao.addMedia(m);
+        
+        m = new Media("101");
+        m.setTitle("Dune");
+        m.setCreator("Frank Herbert");
+        m.setDescription("");
+        m.setYear("1965");
+        m.setGenre("Sci-Fi");
         m.setFormat("Paperback");
         m.setLibrary("00");
         testDao.addMedia(m);
@@ -131,7 +131,7 @@ public class MediaLibraryDaoImplTest {
         m.setLibrary("10");
         testDao.modifyMedia(m);
         
-        assertEquals("Dune", media.get(0).getTitle());
+        assertEquals("2001", media.get(0).getTitle());
         
         List<Media> foundMedia = testDao.findMedia("Dune");
         assertEquals(1, foundMedia.size());

@@ -33,3 +33,6 @@
 2022-01-17 23:34:26 : A Paperback with the title Dune was created. 
 2022-01-17 23:35:44 : A Paperback with the title Dune was created. 
 2022-01-17 23:41:36 : A Paperback with the title Dune was created. 
+2022-01-18 14:17:21 : A paperback titled Dune Messiah was permanently deleted from the media library.
+2022-01-18 14:17:59 : A Paperback with the title Dune was modified. 
+2022-01-18 14:39:07 : A hard cover with the title ZZZ was created. 
