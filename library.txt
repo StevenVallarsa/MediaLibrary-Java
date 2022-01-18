@@ -1,4 +1,3 @@
 19
 00::Default Library::Book Return Cart::The default location for new books
-17::Bedroom::bedroom::nothing
 18::Test::Nowhere::Nothing to see here

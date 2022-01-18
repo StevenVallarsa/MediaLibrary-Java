@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class MediaLibraryDaoMemoryImpl implements MediaLibraryDao {
+public class MediaLibraryDaoImpl implements MediaLibraryDao {
     
     private Map<String, Media> media = new HashMap<>();
     private Map<String, Library> libraries = new HashMap<>();
@@ -37,11 +37,11 @@ public class MediaLibraryDaoMemoryImpl implements MediaLibraryDao {
     public final String MEDIA_FILE;
     public static final String DELIMITER = "::";
     
-    public MediaLibraryDaoMemoryImpl() throws MediaLibraryPersistenceException {
+    public MediaLibraryDaoImpl() throws MediaLibraryPersistenceException {
         this("library.txt", "media.txt");
     }
     
-    public MediaLibraryDaoMemoryImpl(String libraryFile, String mediaFile) throws MediaLibraryPersistenceException {
+    public MediaLibraryDaoImpl(String libraryFile, String mediaFile) throws MediaLibraryPersistenceException {
         LIBRARY_FILE = libraryFile;
         MEDIA_FILE = mediaFile;
         loadLibrary();

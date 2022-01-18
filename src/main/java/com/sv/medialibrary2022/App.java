@@ -6,7 +6,7 @@ import com.sv.medialibrary2022.dao.MediaLibraryAuditDao;
 import com.sv.medialibrary2022.dao.MediaLibraryAuditDaoImpl;
 import com.sv.medialibrary2022.dao.MediaLibraryDao;
 import com.sv.medialibrary2022.dao.MediaLibraryPersistenceException;
-import com.sv.medialibrary2022.dao.MediaLibraryDaoMemoryImpl;
+import com.sv.medialibrary2022.dao.MediaLibraryDaoImpl;
 import com.sv.medialibrary2022.servicelayer.MediaLibraryValidationException;
 import com.sv.medialibrary2022.servicelayer.ServiceLayer;
 import com.sv.medialibrary2022.servicelayer.ServiceLayerImpl;
@@ -31,7 +31,7 @@ public class App {
 //        // ORIGINAL HARD-CODED DEPENDECY INJECTION
 //        UserIO myIO = new UserIOConsoleImpl();
 //        MediaLibraryView myView = new MediaLibraryView(myIO);
-//        MediaLibraryDao dao = new MediaLibraryDaoMemoryImpl();
+//        MediaLibraryDao dao = new MediaLibraryDaoImpl();
 //        MediaLibraryAuditDao auditDao = new MediaLibraryAuditDaoImpl();
 //        ServiceLayer service = new ServiceLayerImpl(dao, auditDao);
 //        MediaLibraryController controller = new MediaLibraryController(service, myView);

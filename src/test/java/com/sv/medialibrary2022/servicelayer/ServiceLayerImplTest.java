@@ -15,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -24,9 +26,12 @@ public class ServiceLayerImplTest {
     private ServiceLayer service;
     
     public ServiceLayerImplTest() {
-        MediaLibraryDao dao = new MediaLibraryDaoStubImpl();
-        MediaLibraryAuditDao auditDao = new MediaLibraryAuditDaoStubImpl();
-        service = new ServiceLayerImpl(dao, auditDao);
+//        MediaLibraryDao dao = new MediaLibraryDaoStubImpl();
+//        MediaLibraryAuditDao auditDao = new MediaLibraryAuditDaoStubImpl();
+//        service = new ServiceLayerImpl(dao, auditDao);
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        service = ctx.getBean("service", ServiceLayer.class);
+        
     }
   
     

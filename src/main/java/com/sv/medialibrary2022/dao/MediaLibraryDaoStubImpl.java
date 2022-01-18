@@ -1,5 +1,5 @@
 
-package com.sv.medialibrary2022.servicelayer;
+package com.sv.medialibrary2022.dao;
 
 import com.sv.medialibrary2022.dao.MediaLibraryDao;
 import com.sv.medialibrary2022.dao.MediaLibraryPersistenceException;

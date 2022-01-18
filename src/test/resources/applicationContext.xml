@@ -16,22 +16,12 @@
             http://www.springframework.org/schema/aop  
             http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
     
-    <bean id="io" class="com.sv.medialibrary2022.ui.UserIOConsoleImpl" />
     <bean id="dao" class="com.sv.medialibrary2022.dao.MediaLibraryDaoImpl" />
-    <bean id="auditDao" class="com.sv.medialibrary2022.dao.MediaLibraryAuditDaoImpl" />
-    <bean id="view" class="com.sv.medialibrary2022.ui.MediaLibraryView">
-        <constructor-arg ref="io" />
-    </bean>
+    <bean id="daoStub" class="com.sv.medialibrary2022.dao.MediaLibraryDaoStubImpl" />
+    <bean id="auditDaoStub" class="com.sv.medialibrary2022.dao.MediaLibraryAuditDaoStubImpl" />
     <bean id="service" class="com.sv.medialibrary2022.servicelayer.ServiceLayerImpl">
-        <constructor-arg ref="dao" />
-        <constructor-arg ref="auditDao" />
+        <constructor-arg ref="daoStub" />
+        <constructor-arg ref="auditDaoStub" />
     </bean>
-    <bean id="controller" class="com.sv.medialibrary2022.controller.MediaLibraryController">
-        <constructor-arg ref="service" />
-        <constructor-arg ref="view" />
-            
-    </bean>
-
-
 
 </beans>
